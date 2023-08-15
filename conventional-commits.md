@@ -70,7 +70,21 @@ the reasons why the change happened.
 This allows for additional, specific description of the change.
 When there's a breaking change, it's best practice to add the `BREAKING CHANGE`
 footer followed by a description. Other footers can be some issue references,
-or reviewers. Footers should follow the [git trailer format](https://git-scm.com/docs/git-interpret-trailers), which is essentially: `token: value`.
+or reviewers. Footers should follow the [git trailer format](https://git-scm.com/docs/git-interpret-trailers),
+which is essentially: `token: value`.
+
+It's also best practice to separate footer from the rest of the description body by adding at least 3 `-` dashes.
+This signifies a divider between the sections.
+
+For example:
+
+```git
+my description here
+
+---
+
+footer: some stuff
+```
 
 ## Examples
 
@@ -80,6 +94,8 @@ The following examples are retrieved directly from the conventional commit [docs
 
 ```git
 feat: allow provided config object to extend other configs
+
+---------
 
 BREAKING CHANGE: `extends` key in config file is now used for extending other config files
 ```
@@ -100,6 +116,8 @@ feat(api)!: send an email to the customer when a product is shipped
 
 ```git
 chore!: drop support for Node 6
+
+---------
 
 BREAKING CHANGE: use JavaScript features not available in Node 6.
 ```
@@ -126,6 +144,8 @@ incoming responses other than from latest request.
 
 Remove timeouts which were used to mitigate the racing issue but are
 obsolete now.
+
+---------
 
 Reviewed-by: Z
 Refs: #123
