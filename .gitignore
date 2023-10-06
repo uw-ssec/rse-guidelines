@@ -159,3 +159,4 @@ cython_debug/
 
 # Jupyter book
 _build/
+conf.py
