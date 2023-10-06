@@ -3,6 +3,7 @@
 
 title: RSE Guidelines
 author: UW Scientific Software Engineering Center
+copyright: '2023'
 logo: assets/images/logo.png
 
 # Force re-execution of notebooks on each build.
