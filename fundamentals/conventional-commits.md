@@ -5,7 +5,7 @@ convention for the structure of commit messages. This ensures both human and mac
 
 The commit message should be structured as follows:
 
-```git
+```text
 <type>[optional scope]: <description>
 
 [optional body]
@@ -78,7 +78,7 @@ This signifies a divider between the sections.
 
 For example:
 
-```git
+```text
 my description here
 
 ---
@@ -92,7 +92,7 @@ The following examples are retrieved directly from the conventional commit [docs
 
 ### Commit message with description and breaking change footer
 
-```git
+```text
 feat: allow provided config object to extend other configs
 
 ---------
@@ -102,19 +102,19 @@ BREAKING CHANGE: `extends` key in config file is now used for extending other co
 
 ### Commit message with `!` to draw attention to breaking change
 
-```git
+```text
 feat!: send an email to the customer when a product is shipped
 ```
 
 ### Commit message with scope and `!` to draw attention to breaking change
 
-```git
+```text
 feat(api)!: send an email to the customer when a product is shipped
 ```
 
 ### Commit message with both `!` and BREAKING CHANGE footer
 
-```git
+```text
 chore!: drop support for Node 6
 
 ---------
@@ -124,19 +124,19 @@ BREAKING CHANGE: use JavaScript features not available in Node 6.
 
 ### Commit message with no body
 
-```git
+```text
 docs: correct spelling of CHANGELOG
 ```
 
 ### Commit message with scope
 
-```git
+```text
 feat(lang): add Polish language
 ```
 
 ### Commit message with multi-paragraph body and multiple footers
 
-```git
+```text
 fix: prevent racing of requests
 
 Introduce a request id and a reference to latest request. Dismiss
