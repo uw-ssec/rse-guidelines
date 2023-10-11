@@ -1,7 +1,7 @@
 # Research Software Engineering Guidelines
 
 Welcome! We hope that you'll find these tutorials and guides set forth by
-the University of Washington Scientific Software Engineering Center ([https://github.com/uw-ssec](https://github.com/uw-ssec)) useful.
+the [University of Washington Scientific Software Engineering Center](https://escience.washington.edu/software-engineering/ssec/) useful.
 
 📖 On this Jupyter Book website you’ll find various guides to
 Research Software Engineering (RSE) best practices.
