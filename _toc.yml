@@ -9,4 +9,7 @@ parts:
     - file: overview/get-started
   - caption: Fundamentals
     chapters:
+    - file: fundamentals/code-environment
+    - file: fundamentals/git-github
     - file: fundamentals/conventional-commits
+    - file: fundamentals/test-debug
