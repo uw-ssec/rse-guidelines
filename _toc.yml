@@ -13,3 +13,4 @@ parts:
     - file: fundamentals/git-github
     - file: fundamentals/conventional-commits
     - file: fundamentals/test-debug
+    - file: fundamentals/share-deploy
