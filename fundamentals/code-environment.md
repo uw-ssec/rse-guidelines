@@ -12,9 +12,7 @@ In this tutorial, we will explore what Conda and Jupyter Notebook are, how they 
 **Key Features**:
 
 - **Package Management**: Conda offers an extensive repository of pre-built packages and libraries. Users can easily install, update, and remove packages using simple commands.
-
 - **Environment Isolation**: Virtual environments created with Conda can have their specific Python versions and libraries. This helps avoid compatibility issues between projects.
-
 - **Cross-Platform Compatibility**: Conda works seamlessly across Windows, macOS, and Linux, making it ideal for cross-platform development and deployment.
 
 ### Installation
@@ -234,13 +232,10 @@ These documents provide a complete and self-contained record of a computation th
 
 **Key Features**:
 
-- Code Interactivity: You can run code cells interactively, making it easy to experiment and visualize the results in real-time.
-
-- Rich Media Support: Jupyter Notebook supports the inclusion of images, videos, and interactive visualizations to enhance your data presentation.
-
-- Sharing and Collaboration: Notebooks can be shared easily with colleagues and collaborators, promoting effective collaboration in data analysis and research.
-
-- Kernels: Jupyter supports various kernels, allowing you to work in different programming languages within the same notebook.
+- **Code Interactivity**: You can run code cells interactively, making it easy to experiment and visualize the results in real-time.
+- **Rich Media Support**: Jupyter Notebook supports the inclusion of images, videos, and interactive visualizations to enhance your data presentation.
+- **Sharing and Collaboration**: Notebooks can be shared easily with colleagues and collaborators, promoting effective collaboration in data analysis and research.
+- **Kernels**: Jupyter supports various kernels, allowing you to work in different programming languages within the same notebook.
 
 ### Installation
 

@@ -24,15 +24,10 @@ There are a lot of resources out there to learn about how to use git, we recomme
 **Key features**:
 
 - **Remote Hosting**: GitHub stores your Git repositories in the cloud, making them accessible from anywhere with an internet connection.
-
 - **Pull Requests**: Developers can propose changes to a project through pull requests. This is a powerful way to review, discuss, and contribute to code improvements collaboratively.
-
 - **Issue Tracking**: GitHub includes a built-in issue tracking system, allowing teams to manage tasks, bugs, and enhancements efficiently.
-
 - **Documentation and Wikis**: You can create detailed documentation and wikis for your projects, making it easier for contributors to understand and work on your code.
-
 - **Discussions**: You can host a forum based discussions within Github to track engagement for your project.
-
 - **Codespaces**: A cloud-hosted development environments for software developers offered by Github. It allows developers to write, build, and test code directly within their web browser, making it easier to collaborate and work on projects from different devices and locations.
 
 ## Open Source Development with Git and GitHub
@@ -40,11 +35,8 @@ There are a lot of resources out there to learn about how to use git, we recomme
 Git and GitHub work seamlessly together, creating an environment where developers can collaborate efficiently and manage code effectively. This allows ease of development and collaboration, which contributes to the success of many open source projects. Here's how:
 
 - **Version Control with Git**: Git handles version control and local development, while GitHub serves as the remote hub for project sharing and collaboration.
-
 - **Pull Requests**: GitHub's pull request feature allows developers to propose changes, review code, and have discussions, making it easy to manage contributions from multiple team members.
-
 - **Forking and Cloning**: Developers can fork a project (create a personal copy) and clone it to their local environment, work on it, and propose changes back to the original project through pull requests.
-
 - **Team Collaboration**: GitHub makes it easy for teams to work together, manage issues, and coordinate their work in a centralized location.
 
 ### Github Collaboration Step by step
