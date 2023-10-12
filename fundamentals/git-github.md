@@ -57,6 +57,8 @@ For your convenience we've set up a github repository where you can practice by 
 and underneath your own named directory.
 For simplicity we suggest naming your directory the same way as your github username**
 
+These steps follow a [Git Forking Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow).
+
 #### Step 1: Sign into GitHub
 
 Sign into your GitHub account, or [create a free GitHub account](https://github.com/join) if you don't have one.
@@ -178,3 +180,225 @@ Use `git branch` to show your local branches. You should see your new branch as 
 #### Step 9: Make changes in your local repository
 
 Now we're ready to add the notebook and conda environment that we created earlier so we can share with everyone on github!
+
+**Note: The below instructions are to be run in a command line, however you can also use your file explorer applications for your operating system to create new folders and move files**
+
+First create the proper directory where your jupyter notebook and conda environment yaml file will go into:
+
+```console
+# Go into the contributions directory
+cd contributions
+
+# Make new directory with your github username as the directory name
+mkdir lsetiawan
+```
+
+Move the jupyter notebook and conda environment yaml file into the new directory that you've just created.
+
+```console
+# Move the jupyter notebook
+mv /path/to/my-first-notebook.ipynb ./lsetiawan/my-first-notebook.ipynb
+
+# Move the yaml file
+mv /path/to/environment.yml ./lsetiawan/environment.yml
+```
+
+#### Step 10: Commit your changes
+
+Once you've moved the files to the proper directory, now let's commit our set of changes to git.
+
+Use `git add -A` to stage your changes and `git commit -m "DESCRIPTION OF CHANGES"` to commit them.
+
+Here are the typical steps:
+
+1. Stage changes
+
+    ```console
+    git add -A
+    ```
+
+2. Double check change status, this serves as a nice self review to make sure that you haven't accidentally committed additional files that you might not want to commit.
+
+    ```console
+    git status
+    ```
+
+3. Now we commit changes!
+
+    ```console
+    git commit -m "feat: Added my first jupyter notebook and yaml file"
+    ```
+
+**If you are making multiple sets of changes, it's a good practice to make a commit after each set.**
+
+#### Step 11: Push your changes to your fork
+
+When you are done making all of your changes, upload these changes to your fork using `git push origin BRANCH_NAME`. This "pushes" your changes to the "BRANCH_NAME" branch of the "origin" (which is your fork on GitHub).
+
+```console
+# Push to your fork, add-notebook branch
+git push origin add-notebook
+```
+
+#### Step 12: Begin the pull request
+
+When you execute step 11, you'd probably get something like below from git:
+
+```console
+Enumerating objects: 6, done.
+Counting objects: 100% (6/6), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 999 bytes | 999.00 KiB/s, done.
+Total 4 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote:
+remote: Create a pull request for 'add-notebook' on GitHub by visiting:
+remote:      https://github.com/lsetiawan/learning-open-source/pull/new/add-notebook
+remote:
+To https://github.com/lsetiawan/learning-open-source.git
+ * [new branch]      add-notebook -> add-notebook
+```
+
+Git is really good at giving feedback instructions after a command.
+We highly recommend reading through what it says and following so if you desire.
+In this case, it has given a url to **open a pull request** and described that a new branch has
+been created in your fork.
+
+To open a pull request, simply go to the given url. In this case: `https://github.com/lsetiawan/learning-open-source/pull/new/add-notebook`.
+
+#### Step 13: Create the pull request
+
+When opening a "pull request", you are making a "request" that the project repository "pull" changes from your fork. You will see that the project repository is listed as the **"base repository"**, and your fork is listed as the **"head repository"**:
+
+![pull request view](../assets/images/pull-request-view.png)
+
+Before submitting the pull request, you first need to describe the changes you made (rather than asking the project maintainers to figure them out on their own). You should write a descriptive title for your pull request, and then include more details in the body of the pull request. If there are any related GitHub issues, make sure to mention those by number. The body can include Markdown formatting, and you can click the **"Preview"** tab to see how it will look.
+
+On the right side, you may see the following:
+
+- Various sections to assign. **If you are not part of the organization team or repository, you wouldn't have enough permission to assign these section. The maintainer will do it for you**:
+  - Reviewers: People to review.
+  - Assignees: Person that is assigned to work on this. Most times this is you.
+  - Labels: Any labels associated to this pull request.
+  - Projects: Github project associated to this pull request.
+  - Milestone: Github milestone associated to this pull request.
+  - Development: Github issues connected to this pull request. If you assign an issue here, once the pull request is merged, that issue will automatically be closed.
+- Links to the project's Contributing or Community guidelines under **"Helpful resources"**. This is primarily worth reading through if you are submitting substantial code (rather than just fixing a typo), but it may still be worth scanning through at this point.
+
+Below the pull request form, you will see a list of the commits you made in your branch, as well as the "diffs" for all of the files you changed.
+
+If everything looks good, click the green Create pull request button!
+
+This diagram summarizes the entire pull request process process (steps 7 through 13):
+
+![pr-diagram](https://www.dataschool.io/content/images/2020/06/diagram-02.png)
+
+#### Step 14: Review the pull request
+
+You have now created a pull request, which is stored in the project's repository (not in your fork of the repository). It's a good idea to read through what you wrote, as well as clicking on the **"Commits"** tab and the **"Files changed"** tab to review the contents of your pull request:
+
+![pr-review](../assets/images/pull-request-review.png)
+
+If you realize that you left out some important details, you can click the 3 dots in the upper right corner to edit your pull request description.
+
+#### Step 15: Add more commits to your pull request
+
+You can continue to add more commits to your pull request even after opening it! For example, the project maintainers may ask you to make some changes, or you may just think of a change that you forgot to include.
+
+Start by returning to your local repository, and use `git branch` to see which branch is currently checked out. If you are currently in the `main` branch (rather than the branch you created), then use `git checkout BRANCH_NAME` to switch. 
+
+```console
+# Check out the add-notebook branch again
+git checkout add-notebook
+```
+
+Then, you should **repeat steps 9 through 11**: make changes, commit them, and push them to your fork.
+
+Finally, return to your open pull request on GitHub and refresh the page. You will see that your new commits have automatically been added to the pull request.
+
+#### Step 16: Discuss the pull request
+
+If there are questions or discussion about your pull request from the project maintainers, you can add to the conversation using the comment box at the bottom of the pull request:
+
+![pr-comment](../assets/images/pull-request-comment.png)
+
+If there are inline comments about specific changes you made, you can respond to those as well (*screenshot below is an example from another discussion*):
+
+![comment-resolve](https://www.dataschool.io/content/images/2020/06/github-16b.png)
+
+Click the **"Resolve conversation"** button once you have addressed any specific requests.
+
+#### Step 17: Delete your branch from your fork
+
+If the project maintainers accept your pull request (congratulations!), they will merge your proposed changes into the project's master branch and close your pull request:
+
+![merged](https://www.dataschool.io/content/images/2020/06/github-17a.png)
+
+You will be given the option to delete your branch from your fork, since it's no longer of any use:
+
+![delete](https://www.dataschool.io/content/images/2020/06/github-17b.png)
+
+Click the **"Delete branch"** button.
+
+#### Step 18: Delete your branch from your local repository
+
+You should also delete the branch you created from your local repository, so that you don't accidentally start working in it the next time you want to make a contribution to this project.
+
+First, switch to the `main` branch
+
+```console
+git checkout main
+```
+
+Then, delete the branch you created
+
+```console
+git branch -D add-notebook
+```
+
+Now if you call `git branch`, you shouldn't see your branch anymore.
+In fact, if you follow this tutorial, you would only have `main` branch left.
+
+```console
+# Called git branch and now only main is left
+% git branch
+* main
+```
+
+#### Step 19: Synchronize your fork with the project repository
+
+At this point, your fork is out of sync with the project repository's `main` branch.
+
+To get it back in sync, you should first use Git to pull the latest changes from **"upstream"** (the project repository) into your local repository:
+
+```console
+git pull upstream main
+```
+
+Then, push those changes from your local repository to the **"origin"** (your fork):
+
+```console
+git push origin main
+```
+
+If you return to your fork on GitHub, you will see that the `main` branch is "even" with the project repository's `main` branch.
+
+**NOTE: This step is not strictly necessary, since you will pull changes from upstream before you make your next contribution to this project (step 7). 
+However, this step is useful if you are going to clone your fork from another machine.**
+
+And that's it! That's all there's to it. Great job!
+
+#### Tips for contributing code
+
+If you're ready to start making code contributions (beyond just fixing typos), here are a few tips:
+
+- Browse through a **repository's open issues** (especially ones labeled "good first issue") to see if there is an issue you might be able to solve.
+- If you're planning to contribute code that is unrelated to an existing issue, it's a good idea to **open a new issue describing your proposal** before starting work on it. The project maintainers might give you feedback that will help to shape your work, which will ultimately increase the likelihood that your pull request will be accepted.
+- Read the project's **contributing guide**, which will usually be in the GitHub repository or the project documentation. It will likely contain many helpful tips for how to successfully contribute to the project.
+
+## Acknowledgements
+
+Github step by step:
+
+The guide originally comes from Data School's Awesome [Step by step guide to contributing on Github]([https://www.dataschool.io/how-to-contribute-on-github/](https://www.dataschool.io/how-to-contribute-on-github/)), but we've updated it a little bit to work with our example, though most of the wordings are similar.

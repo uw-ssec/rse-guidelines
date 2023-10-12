@@ -347,7 +347,7 @@ For this exercise, we will:
 
 ### Conda environment
 
-Open your favorite text editor and copy and paste below, and save to a file called environment.yml
+Open your favorite text editor and copy and paste below, and save to a file called `environment.yml`
 
 ```yaml
 name: myenv
