@@ -337,6 +337,89 @@ Here's how they work together to create a powerful computing environment:
 
 - **Portability**: With Conda, you can export and share your environment configuration as a YAML file. This can be particularly handy when working with colleagues or moving your projects to different machines or cloud servers.
 
+## Exercise: Create a jupyter notebook and conda environment file
+
+For this exercise, we will:
+
+- create a simple conda environment
+- download an existing jupyter notebook
+- run the jupyter notebook
+
+### Conda environment
+
+Open your favorite text editor and copy and paste below, and save to a file called environment.yml
+
+```yaml
+name: myenv
+channels:
+- conda-forge
+dependencies:
+- python=3.10
+- numpy
+- jupyterlab
+```
+
+Create the conda environment:
+
+```console
+conda env create -f environment.yml
+```
+
+### Jupyter notebook
+
+We will now create a new Jupyter Notebook by doing the following.
+Our new Jupyter Notebook will require [`numpy`](https://numpy.org/) package. This package should have been installed in the `myenv` conda environment created above.
+
+To spin up the Notebook application to edit/run the notebook, we will use JupyterLab, which also have been installed.
+
+First, activate your conda environment
+
+```console
+conda activate myenv
+```
+
+Run JupyterLab server on the background to spin up in the browser.
+Once it's spun up, you can hide the terminal and start working in the browser:
+
+```console
+jupyter lab
+```
+
+In the jupyter lab application within the browser, do the following:
+
+1. In the first cell of the notebook, put a heading and short description of our work in markdown format.
+
+    ```markdown
+    # My first notebook
+
+    This is my first notebook example.
+    I will be running some code later.
+    ```
+
+    Ensure that the cell type is `Markdown` by going to the cell type dropdown button in the toolbar and selecting "Markdown", so it can render properly.
+
+    ![nb-cell-type](../assets/images/nb-cell-type.png)
+
+2. On the next cell, import numpy and print it's version:
+
+    ```python
+    import numpy
+
+    print(numpy.__version__)
+    ```
+
+3. On the last cell for this simple example, we'll create an array of integer from 0 to 9 and print it:
+
+    ```python
+    array = numpy.arange(10)
+
+    print(array)
+    ```
+
+4. When you're ready to save the notebook simply do `cmd + S` for MacOS or `ctrl + S` for Windows or Linux, and name the notebook `my-first-notebook.ipynb`.
+
+5. To stop the running server, go back to the terminal and press the following keys on your keyboard: `ctrl+c`.
+
 ## Acknowledgements
 
 Conda:
