@@ -17,6 +17,46 @@ These containers can run consistently across different environments, eliminating
 - **Version Control**: Docker file and/or images can be versioned, allowing you to maintain and track different versions of your application.
 - **Microservices Architecture**: Docker containers are well-suited for microservices-based architectures, enabling you to break down complex applications into smaller, manageable components.
 
+### Containers vs VM
+
+![container-vm](https://www.docker.com/wp-content/uploads/2021/11/docker-containerized-and-vm-transparent-bg.png)
+
+#### Virtual Machine (VM)
+
+Virtual machines (VMs) are an abstraction of physical hardware turning one server into many servers. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries – taking up tens of GBs. VMs can also be slow to boot.
+
+#### Containers
+
+Containers are an abstraction at the app layer that packages code and dependencies together. Multiple containers can run on the same machine and share the OS kernel with other containers, each running as isolated processes in user space. Containers take up less space than VMs (container images are typically tens of MBs in size), can handle more applications and require fewer VMs and Operating systems.
+
+### Docker Architecture
+
+![docker-architecture](https://docs.docker.com/get-started/images/docker-architecture.png)
+
+The Docker Client and Host (Server) in combination is called the Docker Engine. Docker Engine is an open source containerization technology for building and containerizing your applications. Docker Engine acts as a client-server application with:
+
+- A server with a long-running daemon process `dockerd`.
+- APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
+- A command line interface (CLI) client `docker`.
+
+You can read more details about the Docker Architecture [here](https://docs.docker.com/get-started/overview/#docker-architecture).
+
+We'll cover **Registry** on the core concept below.
+
+### Installation
+
+You can install docker directly from their website at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
+
+### Concepts of Docker
+
+#### 1. Docker file
+
+#### 2. Docker Image
+
+#### 3. Docker Container
+
+#### 4. Container Registry
+
 ## GitHub Actions: Automating Your Workflow
 
 GitHub Actions is a versatile and flexible automation tool provided by GitHub.
