@@ -191,6 +191,8 @@ extra:
     - TomAugspurger
 ```
 
+If you have a python library and wanted to quickly create a conda recipe, you can simply use an awesome tool developed by the people at conda-forge called [grayskull](https://pypi.org/project/grayskull/).
+
 **For official walkthrough go to [https://bit.ly/tryconda](https://bit.ly/tryconda)**
 
 **For conda cheat sheet, go to [https://tinyurl.com/y49fjnoj](https://tinyurl.com/y49fjnoj)**
