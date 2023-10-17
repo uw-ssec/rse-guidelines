@@ -51,11 +51,36 @@ You can install docker directly from their website at [https://docs.docker.com/g
 
 #### 1. Docker file
 
+A Docker file is a file containing steps to building your docker image.
+
+Example of an awesome `Dockerfile` can be found [here](https://github.com/pangeo-data/pangeo-docker-images/blob/master/base-image/Dockerfile). What's great about this image is that it sets up conda and jupyter server, which is useful when working on research related work.
+
+With Docker file, you can share this with anyone and that person will get the same exact image as you after it's built.
+Also, since it is a file, you can version control it with git.
+
 #### 2. Docker Image
+
+A Docker Image is the "built" version of a Docker file.
+This typically live on your internal Docker host or an external Registry, so you can't store a Docker image in git.
+
+An example of a docker image that has been built with the Docker file above can be found [here](https://hub.docker.com/layers/pangeo/base-image/latest/images/sha256-1854ca62ef75f1e017e1920b3a167c62cb5f0ee921f13c3247fc4b016e5be3be?context=explore). That is the published image for with specific file sha, which allows for a specific version of that image, just like your regular files!
 
 #### 3. Docker Container
 
+A container is a standard unit of software that get's spun up from an image.
+This is the running software application that you have built.
+It is lightweight and easily scalable and tools like [Kubernetes](https://kubernetes.io/) are used to orchestrate the deployment of these containers in production.
+
 #### 4. Container Registry
+
+As you saw and I mentioned above that images can be stored in a Registry.
+The most popular free registry currently is [Docker Hub](https://hub.docker.com/),
+but there is now the [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as well.
+
+Similarly like an app store, the Docker Hub serves various images and image versions. As you can see [here](https://hub.docker.com/r/pangeo/base-image/tags) these are the various `tags` for the example image.
+Tags are like versions, you can tag images however you like!
+
+**You can go through the [Docker 101](https://www.docker.com/101-tutorial/) lab to practice the concepts above! And the [official docker website](https://docs.docker.com/get-started/) has lots of great "get started" learning resources.**
 
 ## GitHub Actions: Automating Your Workflow
 
