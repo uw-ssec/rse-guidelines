@@ -393,4 +393,4 @@ If you're ready to start making code contributions (beyond just fixing typos), h
 
 Github step by step:
 
-The guide originally comes from Data School's Awesome [Step by step guide to contributing on Github]([https://www.dataschool.io/how-to-contribute-on-github/](https://www.dataschool.io/how-to-contribute-on-github/)), but we've updated it a little bit to work with our example, though most of the wordings are similar.
+The guide originally comes from Data School's Awesome [Step by step guide to contributing on Github](https://www.dataschool.io/how-to-contribute-on-github/), but we've updated it a little bit to work with our example, though most of the wordings are similar.

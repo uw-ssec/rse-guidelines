@@ -160,3 +160,6 @@ cython_debug/
 # Jupyter book
 _build/
 conf.py
+
+# MacOS
+.DS_Store

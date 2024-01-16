@@ -14,3 +14,6 @@ parts:
     - file: fundamentals/conventional-commits
     - file: fundamentals/test-debug
     - file: fundamentals/share-deploy
+  - caption: Tutorials
+    chapters:
+    - file: tutorials/00-git-commit
