@@ -23,9 +23,7 @@ Pre-requisites:
   - Breakpoints: normal, log points, conditional
   - Data inspection: variables, watch and callstack tabs.
 
-<p align="center">
-<img src="../assets/images/basic_debug.png" width="400">
-</p>
+![basic debug](../assets/images/basic_debug.png)
 
 I highly recommend getting used to stepping through the code via function keys: `F5` (start/go), `F10` (step over) and `F11` (step into).
 
@@ -55,18 +53,14 @@ A small but very valuable feature is being able to debug into Jupyter notebooks 
 - Run the first cell 
 - Start debugging the second cell by using the drop down on the left side:
 
-<p align="center">
-    <img src="../assets/images/notebook.png" width="400">
-</p>
+![notebook](../assets/images/notebook.png)
 
 You'll notice the debugger will attach and your breakpoint in `reverse.py` should get hit. You can even set breakpoints in the cell code itself. 
 
 One thing to be aware of is that when you stop debugging the notebook, the kernel will keep running. Unlike debugging a unit test or a file, where stopping the debugger stops the process. Notice the difference in the stop buttons:
 
-<p align="center">
-    <img src="../assets/images/stop.png" width="200"> <br/>
-    <img src="../assets/images/disconnect.png" width="200">
-</p>
+![stop](../assets/images/stop.png)
+![disconnect](../assets/images/disconnect.png)
 
 This can be very confusing if you change some code and start debugging again (assuming you are not using `%autoreload`)
 
