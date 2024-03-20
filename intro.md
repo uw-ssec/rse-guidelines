@@ -8,20 +8,9 @@ Research Software Engineering (RSE) best practices.
 This is not meant to be an extensive knowledge base for these topics,
 but rather an aggregated, quick guides that would give a nice start to your RSE journey.
 
-````{grid}
-:class-container: text-center
-:gutter: 1
+Please navigate to individual topics by clicking through the links
+on the left sidebar.
 
-```{grid-item-card}
-:link: overview/get-started
-:link-type: doc
-:class-header: bg-light
-Get started! 🚀
-^^^
-Learn how to navigate the tutorials and run code examples interactively
-```
-
-````
 
 ## What is SSEC?
 
