@@ -8,7 +8,7 @@
 
 # Types
 #   feat     - Introduces a new feature to the codebase
-#   fix      - A bug fix for the codebasr
+#   fix      - A bug fix for the codebase
 #   docs     - A documentation only change
 #   style    - Changes that do not affect the meaning of the code   
 #   refactor - A code change that neither fixes a bug nor adds a feature
