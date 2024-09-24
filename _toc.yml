@@ -11,7 +11,7 @@ parts:
     - file: fundamentals/conventional-commits
     - file: fundamentals/test-debug
     - file: fundamentals/share-deploy
-    - file: fundamentals/computing-development-environments
+    - file: fundamentals/computing-development-environments/index
       sections:
         - file: fundamentals/computing-development-environments/conda-mamba
         - file: fundamentals/computing-development-environments/docker
