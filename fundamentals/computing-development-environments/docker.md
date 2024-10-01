@@ -66,7 +66,56 @@ A container is a standard unit of software that get's spun up from an image.
 This is the running software application that you have built.
 It is lightweight and easily scalable and tools like [Kubernetes](https://kubernetes.io/) are used to orchestrate the deployment of these containers in production.
 
-### 4. Container Registry
+### 4. Docker Orchestration
+
+Containerization has changed how we build and run applications. It allows apps to run consistently across different environments, from development laptops to production servers. However, as applications grow, managing many containers becomes challenging.
+
+This is where orchestration tools come in. They help automate the deployment, scaling, and management of containerized applications. Key benefits include:
+
+- Automating application maintenance
+- Automatically replacing failed containers
+- Managing updates and configurations
+
+Two popular orchestration tools are [Kubernetes](https://docs.docker.com/guides/deployment-orchestration/kube-deploy/) and [Swarm Mode](https://docs.docker.com/engine/swarm/). 
+
+> **Note**  
+> There are some similar tools that you might find confusing when it comes to Docker Swarm:
+> 1. [Classic Swarm](https://github.com/docker-archive/classicswarm) (Classic and is no longer actively developed)
+> 2. [SwarmKit](https://github.com/moby/swarmkit)
+> 3. [Swarm mode](https://docs.docker.com/engine/swarm/) (Docker version >= 1.12)
+
+In this guide, we will focus on Swarm mode and its related technologies.
+
+Swarm mode is a built-in tool for managing a cluster, which is particularly useful for those of us looking to distribute and scale machine learning workloads across multiple machines with ease.
+
+Additionally, Swarm mode offers [a set of features](https://docs.docker.com/engine/swarm/#feature-highlights). These features make Swarm a powerful tool for managing containerized applications. By leveraging Swarm, users benefit from improved scalability, enhanced security, streamlined deployment processes, etc.
+
+![Swarm Diagram](https://docs.docker.com/engine/swarm/images/swarm-diagram.webp)
+
+#### Core Concepts
+1. **Swarm**: A cluster of one or more Docker Engines. A swarm consists of one or more nodes: physical or virtual machines running Docker Engine.
+2. **Node**: A Docker Engine participating in the swarm (manager or worker).
+3. **Service**: The definition of tasks to execute on nodes.
+4. **Task**: A Docker container running on a node, representing the atomic unit of scheduling.
+
+#### Task Lifecycle
+
+Tasks in a swarm go through various states, including `NEW`, `PENDING`, `RUNNING`, and `COMPLETE`. Understanding these states can help in monitoring and troubleshooting ML jobs.
+
+For more details on task states, please visit: [Swarm task states](https://docs.docker.com/engine/swarm/how-swarm-mode-works/swarm-task-states/).
+
+#### Getting Started
+
+To start using Docker Swarm mode:
+
+1. Initialize a swarm (cluster) of Docker Engines
+2. Add worker nodes to the swarm
+3. Deploy services to the swarm
+4. Scale services as needed
+
+For specific commands and a detailed tutorial, please refer to: [Swarm mode official tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/).
+
+### 5. Container Registry
 
 As you saw and I mentioned above that images can be stored in a Registry.
 The most popular free registry currently is [Docker Hub](https://hub.docker.com/),
