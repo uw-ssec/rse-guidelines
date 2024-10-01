@@ -1,6 +1,6 @@
 # Docker
 
-## Docker: Containerization for Consistency
+## What is Docker?
 
 Docker is a containerization platform that simplifies packaging applications and their dependencies into lightweight, portable containers.
 These containers can run consistently across different environments, eliminating the "it works on my machine" problem.
@@ -16,11 +16,11 @@ These containers can run consistently across different environments, eliminating
 
 ![container-vm](https://www.docker.com/wp-content/uploads/2021/11/docker-containerized-and-vm-transparent-bg.png)
 
-#### Virtual Machine (VM)
+### Virtual Machine (VM)
 
 Virtual machines (VMs) are an abstraction of physical hardware turning one server into many servers. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries – taking up tens of GBs. VMs can also be slow to boot.
 
-#### Containers
+### Containers
 
 Containers are an abstraction at the app layer that packages code and dependencies together. Multiple containers can run on the same machine and share the OS kernel with other containers, each running as isolated processes in user space. Containers take up less space than VMs (container images are typically tens of MBs in size), can handle more applications and require fewer VMs and Operating systems.
 
@@ -38,13 +38,13 @@ You can read more details about the Docker Architecture [here](https://docs.dock
 
 We'll cover **Registry** on the core concept below.
 
-### Installation
+### Docker Installation
 
 You can install docker directly from their website at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
 
-### Concepts of Docker
+## Concepts of Docker
 
-#### 1. Docker file
+### 1. Docker file
 
 A Docker file is a file containing steps to building your docker image.
 
@@ -53,20 +53,20 @@ Example of an awesome `Dockerfile` can be found [here](https://github.com/pangeo
 With Docker file, you can share this with anyone and that person will get the same exact image as you after it's built.
 Also, since it is a file, you can version control it with git.
 
-#### 2. Docker Image
+### 2. Docker Image
 
 A Docker Image is the "built" version of a Docker file.
 This typically live on your internal Docker host or an external Registry, so you can't store a Docker image in git.
 
 An example of a docker image that has been built with the Docker file above can be found [here](https://hub.docker.com/layers/pangeo/base-image/latest/images/sha256-1854ca62ef75f1e017e1920b3a167c62cb5f0ee921f13c3247fc4b016e5be3be?context=explore). That is the published image for with specific file sha, which allows for a specific version of that image, just like your regular files!
 
-#### 3. Docker Container
+### 3. Docker Container
 
 A container is a standard unit of software that get's spun up from an image.
 This is the running software application that you have built.
 It is lightweight and easily scalable and tools like [Kubernetes](https://kubernetes.io/) are used to orchestrate the deployment of these containers in production.
 
-#### 4. Container Registry
+### 4. Container Registry
 
 As you saw and I mentioned above that images can be stored in a Registry.
 The most popular free registry currently is [Docker Hub](https://hub.docker.com/),
