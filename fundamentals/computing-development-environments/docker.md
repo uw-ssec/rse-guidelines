@@ -26,7 +26,7 @@ Containers are an abstraction at the app layer that packages code and dependenci
 
 ### Docker Architecture
 
-![docker-architecture](https://docs.docker.com/get-started/images/docker-architecture.png)
+![docker-architecture](https://docs.docker.com/get-started/images/docker-architecture.webp)
 
 The Docker Client and Host (Server) in combination is called the Docker Engine. Docker Engine is an open source containerization technology for building and containerizing your applications. Docker Engine acts as a client-server application with:
 
