@@ -17,3 +17,10 @@ parts:
         - file: fundamentals/computing-development-environments/docker
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
+  - caption: Advanced
+    chapters:
+    - file: advanced/deployment-strategies-tools/index
+      sections:
+        - file: advanced/deployment-strategies-tools/cloud-infrastructure-and-services
+        - file: advanced/deployment-strategies-tools/kubernetes
+        - file: advanced/deployment-strategies-tools/docker-advanced
