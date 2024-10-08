@@ -1,6 +1,6 @@
 # Docker
 
-## What is Docker?
+## Overview
 
 Docker is a containerization platform that simplifies packaging applications and their dependencies into lightweight, portable containers.
 These containers can run consistently across different environments, eliminating the "it works on my machine" problem.
@@ -8,19 +8,19 @@ These containers can run consistently across different environments, eliminating
 **Key features**:
 
 - **Isolation**: Docker containers encapsulate applications and their dependencies, ensuring that they run consistently and independently of the host environment.
-- **Portability**: Docker containers can be easily moved between different environment: development, testing, and production. This guarantees consistent behavior.
-- **Version Control**: Docker file and/or images can be versioned, allowing you to maintain and track different versions of your application.
+- **Portability**: Docker containers can be easily moved between different environments: development, testing, and production. This guarantees consistent behavior regardless of where the container is run.
+- **Version Control**: Dockerfiles and/or Docker images can be versioned, allowing you to maintain and track different versions of your application.
 - **Microservices Architecture**: Docker containers are well-suited for microservices-based architectures, enabling you to break down complex applications into smaller, manageable components.
 
-### Containers vs VM
+### VMs vs Containers
 
 ![container-vm](https://www.docker.com/wp-content/uploads/2021/11/docker-containerized-and-vm-transparent-bg.png)
 
-### Virtual Machine (VM)
+#### Virtual Machines (VMs)
 
 Virtual machines (VMs) are an abstraction of physical hardware turning one server into many servers. The hypervisor allows multiple VMs to run on a single machine. Each VM includes a full copy of an operating system, the application, necessary binaries and libraries – taking up tens of GBs. VMs can also be slow to boot.
 
-### Containers
+#### Containers
 
 Containers are an abstraction at the app layer that packages code and dependencies together. Multiple containers can run on the same machine and share the OS kernel with other containers, each running as isolated processes in user space. Containers take up less space than VMs (container images are typically tens of MBs in size), can handle more applications and require fewer VMs and Operating systems.
 
@@ -38,13 +38,13 @@ You can read more details about the Docker Architecture [here](https://docs.dock
 
 We'll cover **Registry** on the core concept below.
 
-### Docker Installation
+## Installation
 
 You can install docker directly from their website at [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/).
 
-## Concepts of Docker
+## Docker Concepts
 
-### 1. Docker file
+### 1. Dockerfile
 
 A Docker file is a file containing steps to building your docker image.
 
@@ -62,11 +62,22 @@ An example of a docker image that has been built with the Docker file above can 
 
 ### 3. Docker Container
 
-A container is a standard unit of software that get's spun up from an image.
+A container is a standard unit of software that gets spun up from an image.
 This is the running software application that you have built.
 It is lightweight and easily scalable and tools like [Kubernetes](https://kubernetes.io/) are used to orchestrate the deployment of these containers in production.
 
-### 4. Docker Orchestration
+### 4. Container Registry
+
+As mentioned above, container images can be stored in a Registry. A container registry is a centralized place to store, manage, distribute, and retrieve container images.
+
+The most popular free registry currently is [Docker Hub](https://hub.docker.com/),
+but there is now the [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as well.
+
+Like an app store, Docker Hub serves various images and image versions. As you can see [here](https://hub.docker.com/r/pangeo/base-image/tags) these are the various `tags` for the example image.
+
+**You can go through the [Docker 101](https://www.docker.com/101-tutorial/) lab to practice the concepts above! And the [official Docker website](https://docs.docker.com/get-started/) has lots of great "getting started" learning resources.**
+
+### 5. Docker Orchestration
 
 Containerization has changed how we build and run applications. It allows apps to run consistently across different environments, from development laptops to production servers. However, as applications grow, managing many containers becomes challenging.
 
@@ -80,11 +91,14 @@ Two popular orchestration tools are [Kubernetes](https://docs.docker.com/guides/
 
 > **Note**  
 > There are some similar tools that you might find confusing when it comes to Docker Swarm:
-> 1. [Classic Swarm](https://github.com/docker-archive/classicswarm) (Classic and is no longer actively developed)
+> 1. [**Swarm mode**](https://docs.docker.com/engine/swarm/)
+> * **This is what we are referring to**
 > 2. [SwarmKit](https://github.com/moby/swarmkit)
-> 3. [Swarm mode](https://docs.docker.com/engine/swarm/) (Docker version >= 1.12)
+> * This project contains the underlying libraries used by Swarm mode
+> 3. [Classic Swarm](https://github.com/docker-archive/classicswarm)
+> * Docker's original orchestration tool. Classic Swarm is no longer actively developed, and you should focus on Swarm mode instead
 
-In this guide, we will focus on Swarm mode and its related technologies.
+In this guide, we will focus on **Swarm mode** and its related technologies.
 
 Swarm mode is a built-in tool for managing a cluster, which is particularly useful for those of us looking to distribute and scale machine learning workloads across multiple machines with ease.
 
@@ -114,14 +128,3 @@ To start using Docker Swarm mode:
 4. Scale services as needed
 
 For specific commands and a detailed tutorial, please refer to: [Swarm mode official tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/).
-
-### 5. Container Registry
-
-As you saw and I mentioned above that images can be stored in a Registry.
-The most popular free registry currently is [Docker Hub](https://hub.docker.com/),
-but there is now the [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as well.
-
-Similarly like an app store, the Docker Hub serves various images and image versions. As you can see [here](https://hub.docker.com/r/pangeo/base-image/tags) these are the various `tags` for the example image.
-Tags are like versions, you can tag images however you like!
-
-**You can go through the [Docker 101](https://www.docker.com/101-tutorial/) lab to practice the concepts above! And the [official docker website](https://docs.docker.com/get-started/) has lots of great "get started" learning resources.**
