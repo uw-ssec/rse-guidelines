@@ -87,44 +87,16 @@ This is where orchestration tools come in. They help automate the deployment, sc
 - Automatically replacing failed containers
 - Managing updates and configurations
 
-Two popular orchestration tools are [Kubernetes](https://docs.docker.com/guides/deployment-orchestration/kube-deploy/) and [Swarm Mode](https://docs.docker.com/engine/swarm/). 
+Two popular orchestration tools are [Kubernetes](https://docs.docker.com/guides/deployment-orchestration/kube-deploy/) and [Docker Swarm mode](https://docs.docker.com/engine/swarm/).
 
-> **Note**  
-> There are some similar tools that you might find confusing when it comes to Docker Swarm:
-> 1. [**Swarm mode**](https://docs.docker.com/engine/swarm/)
-> * **This is what we are referring to**
-> 2. [SwarmKit](https://github.com/moby/swarmkit)
-> * This project contains the underlying libraries used by Swarm mode
-> 3. [Classic Swarm](https://github.com/docker-archive/classicswarm)
-> * Docker's original orchestration tool. Classic Swarm is no longer actively developed, and you should focus on Swarm mode instead
+#### Kubernetes
 
-In this guide, we will focus on **Swarm mode** and its related technologies.
+Kubernetes (K8s) is an open-source container orchestration platform that automates many of the manual processes involved in deploying, managing, and scaling containerized applications. It provides a robust set of features for cluster management, service discovery, load balancing, and more. For a detailed guide on Kubernetes, see our [Kubernetes page](../../advanced/deployment-strategies-tools/kubernetes.html).
 
-Swarm mode is a built-in tool for managing a cluster, which is particularly useful for those of us looking to distribute and scale machine learning workloads across multiple machines with ease.
+#### Swarm
 
-Additionally, Swarm mode offers [a set of features](https://docs.docker.com/engine/swarm/#feature-highlights). These features make Swarm a powerful tool for managing containerized applications. By leveraging Swarm, users benefit from improved scalability, enhanced security, streamlined deployment processes, etc.
+Docker Swarm is an open-source container orchestration platform that is native to Docker. It converts multiple Docker instances into a single virtual host. Unlike Kubernetes' steeper learning curve, Swarm mode integrates seamlessly with Docker CLI, providing built-in service discovery, load balancing, and rolling updates with minimal configuration. For more details, see our [Docker Advanced page](../../advanced/deployment-strategies-tools/docker-advanced.html).
 
-![Swarm Diagram](https://docs.docker.com/engine/swarm/images/swarm-diagram.webp)
+#### Differences between Kubernetes and Swarm
 
-#### Core Concepts
-1. **Swarm**: A cluster of one or more Docker Engines. A swarm consists of one or more nodes: physical or virtual machines running Docker Engine.
-2. **Node**: A Docker Engine participating in the swarm (manager or worker).
-3. **Service**: The definition of tasks to execute on nodes.
-4. **Task**: A Docker container running on a node, representing the atomic unit of scheduling.
-
-#### Task Lifecycle
-
-Tasks in a swarm go through various states, including `NEW`, `PENDING`, `RUNNING`, and `COMPLETE`. Understanding these states can help in monitoring and troubleshooting ML jobs.
-
-For more details on task states, please visit: [Swarm task states](https://docs.docker.com/engine/swarm/how-swarm-mode-works/swarm-task-states/).
-
-#### Getting Started
-
-To start using Docker Swarm mode:
-
-1. Initialize a swarm (cluster) of Docker Engines
-2. Add worker nodes to the swarm
-3. Deploy services to the swarm
-4. Scale services as needed
-
-For specific commands and a detailed tutorial, please refer to: [Swarm mode official tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/).
+While both Docker Swarm and Kubernetes do manage containers across multiple hosts, the way they do it and the level of abstraction they provide differ. Docker Swarm's approach is more straightforward, while Kubernetes offers a more comprehensive but complex cluster management system. You can gain a better understanding of the distinction by reviewing the [Kubernetes](../../advanced/deployment-strategies-tools/kubernetes.html) and [Docker Advanced](../../advanced/deployment-strategies-tools/docker-advanced.html) pages.
