@@ -91,12 +91,12 @@ Two popular orchestration tools are [Kubernetes](https://docs.docker.com/guides/
 
 #### Kubernetes
 
-Kubernetes (K8s) is an open-source container orchestration platform that automates many of the manual processes involved in deploying, managing, and scaling containerized applications. It provides a robust set of features for cluster management, service discovery, load balancing, and more. For a detailed guide on Kubernetes, see our [Kubernetes page](../../advanced/deployment-strategies-tools/kubernetes.html).
+Kubernetes (K8s) is an open-source container orchestration platform that automates many of the manual processes involved in deploying, managing, and scaling containerized applications. It provides a robust set of features for cluster management, service discovery, load balancing, and more. For a detailed guide on Kubernetes, see our [Kubernetes](https://rse-guidelines.readthedocs.io/en/latest/advanced/deployment-strategies-tools/kubernetes.html) page.
 
 #### Swarm
 
-Docker Swarm is an open-source container orchestration platform that is native to Docker. It converts multiple Docker instances into a single virtual host. Unlike Kubernetes' steeper learning curve, Swarm mode integrates seamlessly with Docker CLI, providing built-in service discovery, load balancing, and rolling updates with minimal configuration. For more details, see our [Docker Advanced page](../../advanced/deployment-strategies-tools/docker-advanced.html).
+Docker Swarm is an open-source container orchestration platform that is native to Docker. It converts multiple Docker instances into a single virtual host. Unlike Kubernetes' steeper learning curve, Swarm mode integrates seamlessly with Docker CLI, providing built-in service discovery, load balancing, and rolling updates with minimal configuration. For more details, see our [Docker Advanced](https://rse-guidelines.readthedocs.io/en/latest/advanced/deployment-strategies-tools/docker-advanced.html) page.
 
 #### Differences between Kubernetes and Swarm
 
-While both Docker Swarm and Kubernetes do manage containers across multiple hosts, the way they do it and the level of abstraction they provide differ. Docker Swarm's approach is more straightforward, while Kubernetes offers a more comprehensive but complex cluster management system. You can gain a better understanding of the distinction by reviewing the [Kubernetes](../../advanced/deployment-strategies-tools/kubernetes.html) and [Docker Advanced](../../advanced/deployment-strategies-tools/docker-advanced.html) pages.
+While both Docker Swarm and Kubernetes do manage containers across multiple hosts, the way they do it and the level of abstraction they provide differ. Docker Swarm's approach is more straightforward, while Kubernetes offers a more comprehensive but complex cluster management system. You can gain a better understanding of the distinction by reviewing the [Kubernetes](../../advanced/deployment-strategies-tools/kubernetes.html) and [Docker Advanced](https://rse-guidelines.readthedocs.io/en/latest/advanced/deployment-strategies-tools/docker-advanced.html) pages.
