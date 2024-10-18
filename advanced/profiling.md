@@ -56,7 +56,11 @@ Out[1]: CPU times: user 521 ms, sys: 26.2 ms, total: 547 ms
 - iPython magics `%timeit` and `%%timeit`
 - Configurable flags such as #iterations, precision, and saving output to variable (see the [ipython docs for all flags](https://ipython.readthedocs.io/en/stable/interactive/magics.html#magic-timeit))
 - Can also be used on python scripts (see [python docs for examples](https://docs.python.org/3/library/timeit.html))
-- Warning: Watch out for operations that modify a global state such as `file.read()` or `list.sort()`. E.g. `%timeit arr.sort()` will display an inaccurate timing since the list will be sorted in-place on the first iteration, then subsequent iterations will be near instant.
+
+```{warning}
+Watch out for operations that modify a global state such as `file.read()` or `list.sort()`. E.g. `%timeit arr.sort()` will display an inaccurate timing since the list will be sorted in-place on the first iteration, then subsequent iterations will be near instant.
+```
+
 
 ```python
 In [1]: %timeit random_primes_sum()
@@ -70,7 +74,8 @@ Out[1]: 525 ms ± 10.4 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 
 ```console
 python -m cProfile random_primes_sum.py
-````
+```
+
 ```console
           6236608 function calls (6236576 primitive calls) in 1.177 seconds
 
@@ -94,6 +99,7 @@ This output can be hard to interpret, so we can save the cProfile output and use
 ```bash
 python -m cProfile -o rps.prof random_primes_sum.py
 ```
+
 ```console
 snakeviz rps.prof
 ```
