@@ -16,7 +16,7 @@ parts:
         - file: fundamentals/computing-development-environments/docker
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
-  - caption: Advanced
+  - caption: Advanced Fundamentals
     chapters:
     - file: advanced/profiling
     - file: advanced/deployment-strategies-tools/index
