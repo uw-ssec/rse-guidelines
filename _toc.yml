@@ -16,9 +16,6 @@ parts:
         - file: fundamentals/computing-development-environments/docker
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
-    - file: fundamentals/frontend-app-development/index
-      sections:
-        - file: fundamentals/frontend-app-development/flutter
   - caption: Advanced
     chapters:
     - file: advanced/profiling
@@ -27,3 +24,8 @@ parts:
         - file: advanced/deployment-strategies-tools/cloud-infrastructure-and-services
         - file: advanced/deployment-strategies-tools/kubernetes
         - file: advanced/deployment-strategies-tools/docker-advanced
+  - caption: App Development
+    chapters:
+    - file: app-development/frontend/index
+      sections:
+        - file: app-development/frontend/flutter
