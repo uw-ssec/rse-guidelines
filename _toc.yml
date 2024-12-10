@@ -16,6 +16,9 @@ parts:
         - file: fundamentals/computing-development-environments/docker
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
+    - file: fundamentals/frontend-app-development/index
+      sections:
+        - file: fundamentals/frontend-app-development/flutter
   - caption: Advanced
     chapters:
     - file: advanced/profiling
