@@ -1,4 +1,4 @@
-# Frontend App Development
+# Frontend
 
 Coming soon
 
