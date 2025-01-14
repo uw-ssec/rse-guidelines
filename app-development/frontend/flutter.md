@@ -111,3 +111,109 @@ class _CounterWidgetState extends State<CounterWidget> {
 // Usage
 CounterWidget()
 ```
+
+## State Management with BLoC Pattern
+
+Flutter's BLoC (Business Logic Component) pattern is a robust and popular choice for managing state. It encourages a clean separation of concerns, which helps make applications not only scalable but also easy to maintain. I’m excited to delve into how it's used in real applications. Here’s a detailed guide with examples from the [NSF Resilience App](https://github.com/UW-THINKlab/resilience) repository to get you started!
+
+### Core Concepts
+
+1. **Events**: These are actions that trigger state changes, typically originating from user interactions or external data.
+2. **States**: Represent the current state of the application, consumed by the UI.
+3. **BLoC**: The core component that maps incoming events to outgoing states.
+
+### **Detailed Implementation**
+
+#### **Defining a BLoC**
+
+Here’s an example of how a BLoC class is defined. In this case, the `AppBloc` listens for events and updates states accordingly. One of the key events handled is changing the **mode** of the app.
+
+In the context of the Resilience project, the **mode** refers to the type of emergency scenario the app is currently handling. The app can be in one of three modes:
+
+1. **Emergency Mode**: The app operates in a real emergency response mode, allowing users to access critical disaster information and communicate urgent needs.
+2. **Test Emergency Mode**: The app is in a testing state, simulating emergency conditions without the full functionality of an actual emergency.
+3. **Normal Mode**: The default operational mode, where the app functions without the emergency-specific features.
+
+For example, when a user interacts with the app’s interface to declare an emergency, a dialog will prompt them to select either **Emergency**, **Test Emergency**, or **Cancel**. Depending on their selection, the app will switch to the corresponding mode.
+
+Here’s how the **AppBloc** handles the mode change event:
+
+```dart
+class AppBloc extends Bloc<AppEvent, AppState> {
+  final AppRepository _appRepository;
+
+  AppBloc({required AppRepository appRepository})
+      : _appRepository = appRepository,
+        super(const AppState()) {
+    on<AppOnModeChanged>(_onModeChanged);
+    // other event handlers...
+  }
+
+  // Event Handler for Mode Change
+  void _onModeChanged(AppOnModeChanged event, Emitter<AppState> emit) {
+    emit(state.copyWith(mode: event.mode)); // Update the app state with the new mode
+  }
+}
+```
+
+### **Defining Events and Modes**
+
+The `AppOnModeChanged` event allows the app to handle mode changes based on the user's interaction with the dialog. Here's how the event is defined:
+
+```dart
+class AppOnModeChanged extends AppEvent {
+  final String mode;
+
+  AppOnModeChanged(this.mode);
+
+  @override
+  List<Object> get props => [mode];
+}
+```
+
+The **mode** can be one of the following:
+- `emergency`: The app switches to emergency mode.
+- `test`: The app enters test emergency mode.
+- `normal`: The app reverts to the normal mode.
+
+This event allows the app to dynamically switch between different modes based on the user’s input, enabling the app to function properly in various disaster scenarios.
+
+### **Mode Change Example**
+
+In the Resilience project, when a user decides to declare an emergency, a dialog appears asking whether they want to enter **Emergency Mode** or **Test Emergency Mode**. If they select **Emergency**, the app will transition to **Emergency Mode**, and if they select **Test**, the app will switch to **Test Emergency Mode**.
+
+```dart
+Future<void> _showModeDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Declare Emergency'),
+        content: const Text('Do you want to declare an Emergency or Test Emergency?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              context.read<AppBloc>().add(AppOnModeChanged('emergency'));
+              Navigator.of(context).pop();
+            },
+            child: const Text('Emergency'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AppBloc>().add(AppOnModeChanged('test'));
+              Navigator.of(context).pop();
+            },
+            child: const Text('Test'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+        ],
+      );
+    },
+  );
+}
+```
