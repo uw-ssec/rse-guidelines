@@ -1,2 +1,3 @@
 # Dependencies for building the jupyter book
 jupyter-book>=0.15.1
+sphinx-sitemap>=2.6.0,<3
