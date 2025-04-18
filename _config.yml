@@ -28,3 +28,11 @@ html:
   use_issues_button: true
   use_repository_button: true
   use_edit_page_button: true
+
+# Extra sphinx config
+sphinx:
+  config:
+    html_baseurl            : "https://rse-guidelines.readthedocs.io/"
+    sitemap_url_scheme      : "{link}"
+  extra_extensions:
+    - sphinx_sitemap
