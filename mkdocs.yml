@@ -1,7 +1,6 @@
 site_name: RSE Guidelines
 site_description: Research Software Engineering (RSE) best practices
 site_url: https://rse-guidelines.readthedocs.io/  # Required for the llmstxt plugin to work.
-docs_dir: .
 
 
 # Repository
