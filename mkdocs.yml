@@ -25,6 +25,7 @@ theme:
   name: material
   features:
     - toc.integrate
+    - navigation.tabs
     - navigation.sections
     - navigation.expand
     - navigation.footer
