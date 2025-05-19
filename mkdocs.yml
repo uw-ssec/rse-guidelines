@@ -8,6 +8,8 @@ repo_name: uw-ssec/rse-guidelines
 repo_url: https://github.com/uw-ssec/rse-guidelines
 
 plugins:
+- search
+- awesome-nav
 - mkdocs-jupyter
 - llmstxt:
     full_output: llms-full.txt
