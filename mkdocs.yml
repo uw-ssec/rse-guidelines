@@ -11,6 +11,10 @@ plugins:
 - search
 - awesome-nav
 - mkdocs-jupyter
+- mike:
+    alias_type: symlink
+    canonical_version: latest
+  # llmstxt must come after the mike plugin:
 - llmstxt:
     full_output: llms-full.txt
     sections:
@@ -74,3 +78,7 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.blocks.caption
+
+extra:
+  version:
+    provider: mike
