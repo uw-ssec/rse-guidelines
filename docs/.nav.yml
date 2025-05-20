@@ -1,5 +1,6 @@
 nav:
-  - index.md
+  - Overview:
+    - Welcome to UW SSEC RSE Guidelines: index.md
   - Fundamentals: fundamentals
   - Advanced Fundamentals: advanced
   - App Development: app-development
