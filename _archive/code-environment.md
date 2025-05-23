@@ -395,7 +395,7 @@ In the jupyter lab application within the browser, do the following:
 
     Ensure that the cell type is `Markdown` by going to the cell type dropdown button in the toolbar and selecting "Markdown", so it can render properly.
 
-    ![nb-cell-type](../assets/images/nb-cell-type.png)
+    ![nb-cell-type](../docs/assets/images/nb-cell-type.png)
 
 2. On the next cell, import numpy and print it's version:
 

@@ -1,0 +1,84 @@
+site_name: RSE Guidelines
+site_description: Research Software Engineering (RSE) best practices
+site_url: https://rse-guidelines.readthedocs.io/  # Required for the llmstxt plugin to work.
+
+
+# Repository
+repo_name: uw-ssec/rse-guidelines
+repo_url: https://github.com/uw-ssec/rse-guidelines
+
+plugins:
+- search
+- awesome-nav
+- mkdocs-jupyter
+- mike:
+    alias_type: symlink
+    canonical_version: latest
+  # llmstxt must come after the mike plugin:
+- llmstxt:
+    full_output: llms-full.txt
+    sections:
+      Usage documentation:
+      - index.md
+      - overview/*.md
+      - fundamentals/**/*.md
+      - advanced/**/*.md
+
+# Configuration
+theme:
+  name: material
+  features:
+    - toc.integrate
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.footer
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+      primary: indigo
+      accent: indigo
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+      primary: indigo
+      accent: amber
+  font:
+    text: Roboto
+    code: Roboto Mono
+  logo: 'assets/images/logo.png'
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+
+extra:
+  version:
+    provider: mike

@@ -3,14 +3,13 @@
 Welcome! We hope that you'll find these tutorials and guides set forth by
 the [University of Washington Scientific Software Engineering Center](https://escience.washington.edu/software-engineering/ssec/) useful.
 
-📖 On this Jupyter Book website you’ll find various guides to
+📖 On this website you’ll find various guides to
 Research Software Engineering (RSE) best practices.
 This is not meant to be an extensive knowledge base for these topics,
 but rather an aggregated, quick guides that would give a nice start to your RSE journey.
 
 Please navigate to individual topics by clicking through the links
-on the left sidebar.
-
+on the top navigation and left sidebar.
 
 ## What is SSEC?
 
