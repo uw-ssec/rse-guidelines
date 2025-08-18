@@ -2,59 +2,142 @@
 
 Pixi is a fast, modern, and reproducible package management tool that builds upon the conda ecosystem while introducing a project-centric approach to environment management. If you're familiar with conda/mamba, this guide will help you transition to Pixi and understand its unique advantages.
 
-## Why Pixi?
+??? info "Conda workflows and Pixi"
+      
+    ## Why Pixi?
 
-Before Pixi, conda was the go-to tool for managing Python environments and packages, especially in data science and scientific computing. So why do we need Pixi?
+    Before Pixi, conda was the go-to tool for managing Python environments and packages, especially in data science and scientific computing. So why do we need Pixi?
 
-### Conda Workflow
+    ### Conda Workflow
 
-Before answering that question, let's take a look at the current conda workflow. A typical "best practice" conda workflow involves the following steps. See the [Conda/Mamba Fundamentals](./conda-mamba.md) for more details.
+    Before answering that question, let's take a look at the current conda workflow. A typical "best practice" conda workflow involves the following steps. See the [Conda/Mamba Fundamentals](./conda-mamba.md) for more details.
 
-![Conda Workflow](../../assets/images/conda-workflow.png)
+    ![Conda Workflow](../../assets/images/conda-workflow.png)
 
-#### New Environment Process
+    #### New Environment Process
 
-- Create a conda environment yaml file
-- Create a new conda environment from the yaml file
-- Activate the conda environment and start working with that environment
+    - Create a conda environment yaml file
+    - Create a new conda environment from the yaml file
+    - Activate the conda environment and start working with that environment
 
-#### Environment Update Process
+    #### Environment Update Process
 
-- Update the conda environment yaml file
-- Update the conda environment from the yaml file
-- Activate the conda environment and start working with that environment
+    - Update the conda environment yaml file
+    - Update the conda environment from the yaml file
+    - Activate the conda environment and start working with that environment
 
-#### Environment Sharing Process
+    #### Environment Sharing Process
 
-- Share the conda environment yaml file with collaborators
+    - Share the conda environment yaml file with collaborators
 
-If you're a conda user, you might have noticed that this workflow is not very efficient. It requires you to manage multiple files, and the process of creating, updating, and sharing environments can be cumbersome, and it doesn't always guarantee reproducibility.
+    If you're a conda user, you might have noticed that this workflow is not very efficient. It requires you to manage multiple files, and the process of creating, updating, and sharing environments can be cumbersome, and it doesn't always guarantee reproducibility.
 
-### How Pixi can help
+    ### How Pixi can help
 
-Pixi addresses several common pain points developers face with traditional conda workflows:
+    Pixi addresses several common pain points developers face with traditional conda workflows:
 
-- **Project-focused**: Environments are tied to projects, not global system state
-- **Built-in lockfiles**: Automatic dependency locking for perfect reproducibility
-- **Task management**: Cross-platform task runner built-in
-- **Multi-environment support**: Multiple environments per project
-- **Speed**: Pixi is implemented in Rust for fast solving
-- **Universal compatibility**: Works with both conda and PyPI packages
+    - **Project-focused**: Environments are tied to projects, not global system state
+    - **Built-in lockfiles**: Automatic dependency locking for perfect reproducibility
+    - **Task management**: Cross-platform task runner built-in
+    - **Multi-environment support**: Multiple environments per project
+    - **Speed**: Pixi is implemented in Rust for fast solving
+    - **Universal compatibility**: Works with both conda and PyPI packages
 
-### Key Differences: Conda vs Pixi
+    ### Key Differences: Conda vs Pixi
 
-Here's a side-by-side comparison of common tasks:
+    Here's a side-by-side comparison of common tasks:
 
-| Task | Conda/Mamba | Pixi |
-|------|-------------|------|
-| Initializing Project | N/A | `pixi init myproject` |
-| Creating an Environment | `conda create -n myenv python=3.11` | `pixi add python=3.11` (installs in default environment) |
-| Activating Environment | `conda activate myenv` | `pixi shell` (activate default environment) |
-| Installing Packages | `conda install numpy` | `pixi add numpy` (installs in default environment) |
-| Running Commands | `conda run -n myenv python script.py` | `pixi run python script.py` (runs in default environment) |
-| Sharing Environment | `conda export --format=yaml > environment.yaml` (will export `environment.yaml`) | Share `pixi.toml` and `pixi.lock` |
-| Multiple Environments | Separate conda envs | Multiple envs in one project |
+    | Task | Conda/Mamba | Pixi |
+    |------|-------------|------|
+    | Initializing Project | N/A | `pixi init myproject` |
+    | Creating an Environment | `conda create -n myenv python=3.11` | `pixi add python=3.11` (installs in default environment) |
+    | Activating Environment | `conda activate myenv` | `pixi shell` (activate default environment) |
+    | Installing Packages | `conda install numpy` | `pixi add numpy` (installs in default environment) |
+    | Running Commands | `conda run -n myenv python script.py` | `pixi run python script.py` (runs in default environment) |
+    | Sharing Environment | `conda export --format=yaml > environment.yaml` (will export `environment.yaml`) | Share `pixi.toml` and `pixi.lock` |
+    | Multiple Environments | Separate conda envs | Multiple envs in one project |
 
+    ## Migrating from Conda to Pixi
+
+    ### From Conda Environment Files
+
+    If you have an existing `environment.yml`:
+
+    ```yaml
+    name: my-project
+    channels:
+      - conda-forge
+      - bioconda
+    dependencies:
+    - python=3.11
+    - numpy
+    - pandas
+    - pip
+    - pip:
+        - scikit-learn
+        - matplotlib
+    ```
+
+    Convert to Pixi:
+
+    ```bash
+    # Import existing environment.yml
+    pixi init --import environment.yml my-project
+    cd my-project
+    ```
+
+    This creates an equivalent `pixi.toml` automatically.
+
+    ### From requirements.txt
+
+    For Python projects with `requirements.txt`:
+
+    ```bash
+    pixi init my-python-project
+    cd my-python-project
+
+    # Add Python first
+    pixi add python=3.11
+
+    # Add PyPI dependencies from requirements.txt
+    # (You'll need to convert these manually or use a script)
+    cat requirements.txt | xargs -I {} pixi add --pypi {}
+    ```
+
+    ## Practical Exercises
+
+    ### Exercise 1: Converting from Conda
+
+    ??? example "1. Create a traditional environment.yml"
+
+        Create a `environment.yml` file for a project:
+
+        ```yaml
+        name: conda-project
+        channels:
+        - conda-forge
+        - bioconda
+        dependencies:
+        - python=3.11
+        - pandas
+        - numpy
+        - matplotlib
+        - fastqc  # from bioconda
+        - pip
+        - pip:
+            - seaborn
+        ```
+
+
+    ??? example "2. Convert to Pixi"
+
+        ```bash
+        pixi init --import environment.yml converted-project
+        cd converted-project
+        ```
+
+    **Examine the generated pixi.toml** and understand the conversion,
+    see the rest of this document for more details on the `pixi.toml` file.
 ---
 
 ## Installation
@@ -285,88 +368,9 @@ pixi global install jupyter --expose jupyter --expose ipython
 pixi global list
 ```
 
-## Migrating from Conda to Pixi
-
-### From Conda Environment Files
-
-If you have an existing `environment.yml`:
-
-```yaml
-name: my-project
-channels:
-  - conda-forge
-  - bioconda
-dependencies:
-  - python=3.11
-  - numpy
-  - pandas
-  - pip
-  - pip:
-    - scikit-learn
-    - matplotlib
-```
-
-Convert to Pixi:
-
-```bash
-# Import existing environment.yml
-pixi init --import environment.yml my-project
-cd my-project
-```
-
-This creates an equivalent `pixi.toml` automatically.
-
-### From requirements.txt
-
-For Python projects with `requirements.txt`:
-
-```bash
-pixi init my-python-project
-cd my-python-project
-
-# Add Python first
-pixi add python=3.11
-
-# Add PyPI dependencies from requirements.txt
-# (You'll need to convert these manually or use a script)
-cat requirements.txt | xargs -I {} pixi add --pypi {}
-```
-
 ## Practical Exercises
 
-### Exercise 1: Converting from Conda
-
-??? example "1. Create a traditional environment.yml"
-
-      Create a `environment.yml` file for a project:
-
-      ```yaml
-      name: conda-project
-      channels:
-      - conda-forge
-      - bioconda
-      dependencies:
-      - python=3.11
-      - pandas
-      - numpy
-      - matplotlib
-      - fastqc  # from bioconda
-      - pip
-      - pip:
-         - seaborn
-      ```
-
-
-??? example "2. Convert to Pixi"
-
-      ```bash
-      pixi init --import environment.yml converted-project
-      cd converted-project
-      ```
-
-**Examine the generated pixi.toml** and understand the conversion.
-
-### Exercise 2: Create Your First Pixi Project
+### Exercise 1: Create Your First Pixi Project
 
 ??? example "1. Create a new project"
 
@@ -419,7 +423,7 @@ pixi run analyze
 
 **Examine the output** in the CLI. What does it show?
 
-### Exercise 3: Create Multi-Environment Setup
+### Exercise 2: Create Multi-Environment Setup
 
 ??? example "1. Add testing dependencies to a feature"
 
