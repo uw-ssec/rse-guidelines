@@ -374,52 +374,52 @@ pixi global list
 
 ??? example "1. Create a new project"
 
-      ```bash
-      pixi init my-analysis
-      cd my-analysis
-      ```
+    ```bash
+    pixi init my-analysis
+    cd my-analysis
+    ```
 
 ??? example "2. Add dependencies"
 
-      ```bash
-      pixi add python=3.11 pandas numpy matplotlib
-      pixi add --pypi seaborn
-      ```
+    ```bash
+    pixi add python=3.11 pandas numpy matplotlib
+    pixi add --pypi seaborn
+    ```
 
 ??? example "3. Create a simple analysis script"
 
-      ```python
-      # analysis.py
-      import pandas as pd
-      import numpy as np
-      import matplotlib.pyplot as plt
-      import seaborn as sns
-      
-      # Create sample data
-      data = pd.DataFrame({
-         'x': np.random.randn(100),
-         'y': np.random.randn(100)
-      })
-      
-      # Create plot
-      plt.figure(figsize=(8, 6))
-      sns.scatterplot(data=data, x='x', y='y')
-      plt.title('Sample Analysis')
-      plt.savefig('analysis.png')
-      print("Analysis complete! Check analysis.png")
-      ```
+    ```python
+    # analysis.py
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    # Create sample data
+    data = pd.DataFrame({
+        'x': np.random.randn(100),
+        'y': np.random.randn(100)
+    })
+    
+    # Create plot
+    plt.figure(figsize=(8, 6))
+    sns.scatterplot(data=data, x='x', y='y')
+    plt.title('Sample Analysis')
+    plt.savefig('analysis.png')
+    print("Analysis complete! Check analysis.png")
+    ```
 
-??? example "4. Add task called 'analyze' for running script"
+??? example "4. Add task called `analyze` for running script"
 
-      ```bash
-      pixi task add analyze "python analysis.py"
-      ```
+    ```bash
+    pixi task add analyze "python analysis.py"
+    ```
 
-Run the `analyze` task:
+??? example "5. Run the `analyze` task:"
 
-```bash
-pixi run analyze
-```
+    ```bash
+    pixi run analyze
+    ```
 
 **Examine the output** in the CLI. What does it show?
 
@@ -427,41 +427,41 @@ pixi run analyze
 
 ??? example "1. Add testing dependencies to a feature"
 
-      ```bash
-      pixi add --feature test pytest
-      ```
+    ```bash
+    pixi add --feature test pytest
+    ```
 
 ??? example "2. Update your pixi.toml to define environments"
 
-      ```toml
-      [environments]
-      default = {solve-group = "default"}
-      test = {features = ["test"], solve-group = "default"}
-      ```
+    ```toml
+    [environments]
+    default = {solve-group = "default"}
+    test = {features = ["test"], solve-group = "default"}
+    ```
 
 ??? example "3. Create a test file"
 
-      ```python
-      # test_analysis.py
-      import pandas as pd
-      import numpy as np
-      
-      def test_data_creation():
-         data = pd.DataFrame({
-            'x': np.random.randn(10),
-            'y': np.random.randn(10)
-         })
-         assert len(data) == 10
-         assert 'x' in data.columns
-         assert 'y' in data.columns
-      ```
+    ```python
+    # test_analysis.py
+    import pandas as pd
+    import numpy as np
+    
+    def test_data_creation():
+        data = pd.DataFrame({
+        'x': np.random.randn(10),
+        'y': np.random.randn(10)
+        })
+        assert len(data) == 10
+        assert 'x' in data.columns
+        assert 'y' in data.columns
+    ```
 
 ??? example "4. Add test task and run it"
 
-      ```bash
-      pixi task add test "pytest test_analysis.py -v"
-      pixi run -e test test
-      ```
+    ```bash
+    pixi task add test "pytest test_analysis.py -v"
+    pixi run -e test test
+    ```
 
 **Congratulations!** If you've completed these exercises, you now have a solid understanding of Pixi's core concepts and how to use it effectively in your projects.
 
