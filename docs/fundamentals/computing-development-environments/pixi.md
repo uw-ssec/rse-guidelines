@@ -2,7 +2,7 @@
 
 Pixi is a fast, modern, and reproducible package management tool that builds upon the conda ecosystem while introducing a project-centric approach to environment management. If you're familiar with conda/mamba, this guide will help you transition to Pixi and understand its unique advantages.
 
-??? info "Conda workflows and Pixi"
+??? info "For Conda users: Conda workflows and Pixi"
 
     ## Why Pixi?
 
