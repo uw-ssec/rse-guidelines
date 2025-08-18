@@ -88,7 +88,7 @@ Once you have pixi installed, you can verify by running the command below
 pixi --version
 ```
 
-## Concepts of Pixi
+## Pixi Concepts
 
 ### 1. Creating a New Project
 
@@ -190,7 +190,7 @@ pixi run python --version
 pixi run python -c "import numpy; print(numpy.__version__)"
 ```
 
-Finer grain control over the environment and dependencies can be achieved
+Finer-grained control over the environment and dependencies can be achieved
 by using `feature`. Feature is a way to group dependencies and tasks together. For example, you can create a `test` feature for testing dependencies:
 
 ```bash
