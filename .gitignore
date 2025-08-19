@@ -163,3 +163,6 @@ conf.py
 
 # MacOS
 .DS_Store
+
+# pixi environments
+.pixi
