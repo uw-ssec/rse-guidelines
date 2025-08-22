@@ -146,19 +146,19 @@ Pixi is a fast, modern, and reproducible package management tool that builds upo
 
 On Linux & macOS, you can install pixi by running the following command:
 
-    ```bash
-    # With curl
-    curl -fsSL https://pixi.sh/install.sh | bash
+```bash
+# With curl
+curl -fsSL https://pixi.sh/install.sh | bash
 
-    # Or with wget
-    wget -qO- https://pixi.sh/install.sh | sh
-    ```
+# Or with wget
+wget -qO- https://pixi.sh/install.sh | sh
+```
 
 On Windows you can download the [installer](https://github.com/prefix-dev/pixi/releases/latest/download/pixi-x86_64-pc-windows-msvc.msi) or run the following command:
 
-    ```powershell
-    powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
-    ```
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
+```
 
 For other installation methods go the the [pixi installation docs](https://pixi.sh/latest/installation/).
 
@@ -166,51 +166,51 @@ For other installation methods go the the [pixi installation docs](https://pixi.
 
 Once you have pixi installed, you can verify by running the command below
 
-    ```bash
-    pixi --version
-    ```
+```bash
+pixi --version
+```
 
 ## Pixi Concepts
 
 ### 1. Creating a New Project
 
-    ```bash
-    # Create a new project directory with pixi.toml
-    pixi init my-data-project
-    cd my-data-project
-    ```
+```bash
+# Create a new project directory with pixi.toml
+pixi init my-data-project
+cd my-data-project
+```
 
 This creates a project structure:
 
-    ```text
-    my-data-project/
-    ├── .gitignore
-    ├── .gitattributes
-    └── pixi.toml
-    ```
+```text
+my-data-project/
+├── .gitignore
+├── .gitattributes
+└── pixi.toml
+```
 
 ### 2. Understanding the Manifest File
 
 The `pixi.toml` file is the heart of your project:
 
-    ```toml
-    [workspace]
-    authors = ["Your Name <your.email@example.com>"] # (1)!
-    channels = ["conda-forge"]  # (2)!
-    name = "my-data-project" # (3)!
-    description = "A data analysis project using Pixi" # (4)!
-    platforms = ["osx-arm64"] # (5)!
-    version = "0.1.0" # (6)!
+```toml
+[workspace]
+authors = ["Your Name <your.email@example.com>"] # (1)!
+channels = ["conda-forge"]  # (2)!
+name = "my-data-project" # (3)!
+description = "A data analysis project using Pixi" # (4)!
+platforms = ["osx-arm64"] # (5)!
+version = "0.1.0" # (6)!
 
-    [tasks]
-    # Cross-platform tasks go here
+[tasks]
+# Cross-platform tasks go here
 
-    [dependencies]
-    # Conda packages go here
+[dependencies]
+# Conda packages go here
 
-    [pypi-dependencies]
-    # PyPI packages go here
-    ```
+[pypi-dependencies]
+# PyPI packages go here
+```
 
 1. The `authors` field is optional but recommended for project metadata. By default, when you run `pixi init`, it will use your git config user name and email.
 2. The `channels` field allows you to specify conda channels for package resolution.
@@ -223,16 +223,16 @@ The `pixi.toml` file is the heart of your project:
 
 Add conda packages (equivalent to `conda install`):
 
-    ```bash
-    pixi add python=3.11
-    pixi add numpy pandas matplotlib scipy
-    ```
+```bash
+pixi add python=3.11
+pixi add numpy pandas matplotlib scipy
+```
 
 Add PyPI packages:
 
-    ```bash
-    pixi add --pypi scikit-learn seaborn
-    ```
+```bash
+pixi add --pypi scikit-learn seaborn
+```
 
 Add packages from specific channels:
 
@@ -252,119 +252,119 @@ Add packages from specific channels:
 
 Pixi automatically generates a `pixi.lock` file when you add packages. This file locks the exact versions of all dependencies, ensuring reproducibility. You can also manually lock the environment to update the lockfile:
 
-    ```bash
-    pixi lock
-    ```
+```bash
+pixi lock
+```
 
 ### 5. Working with Your Environment
 
 Activate the environment (equivalent to `conda activate`):
 
-    ```bash
-    pixi shell
-    ```
+```bash
+pixi shell
+```
 
 Or run commands directly:
 
-    ```bash
-    pixi run python --version
-    pixi run python -c "import numpy; print(numpy.__version__)"
-    ```
+```bash
+pixi run python --version
+pixi run python -c "import numpy; print(numpy.__version__)"
+```
 
 Finer-grained control over the environment and dependencies can be achieved
 by using `feature`. Feature is a way to group dependencies and tasks together. For example, you can create a `test` feature for testing dependencies:
 
-    ```bash
-    pixi add --feature test pytest coverage # (1)!
-    pixi workspace environment add test --features test # (2)!
-    ```
+```bash
+pixi add --feature test pytest coverage # (1)!
+pixi workspace environment add test --features test # (2)!
+```
 
 1. This adds `pytest` and `coverage` to a feature called `test`. You can then run tasks or commands specific to this feature.
 2. This adds a new environment called `test` that includes the `test` feature. You can then activate this environment.
 
 To activate the `test` environment, you can use:
 
-    ```bash
-    pixi shell -e test
-    ```
+```bash
+pixi shell -e test
+```
 
 ### 6. Task Management
 
 Define cross-platform tasks in your `pixi.toml`:
 
-    ```toml
-    [tasks]
-    # Simple commands
-    clean = "rm -rf __pycache__ .pytest_cache"
-    pytest = "pytest tests/"
-    coverage = "coverage report"
+```toml
+[tasks]
+# Simple commands
+clean = "rm -rf __pycache__ .pytest_cache"
+pytest = "pytest tests/"
+coverage = "coverage report"
 
-    # Multi-step tasks
-    test = { depends-on = ["pytest", "coverage"] }
+# Multi-step tasks
+test = { depends-on = ["pytest", "coverage"] }
 
-    # Task with required arguments
-    [tasks.greet]
-    args = ["name"]
-    cmd = "echo Hello, {{ name }}!"
+# Task with required arguments
+[tasks.greet]
+args = ["name"]
+cmd = "echo Hello, {{ name }}!"
 
-    # Task with optional arguments (default values)
-    [tasks.build]
-    args = [
-    { "arg" = "project", "default" = "my-app" },
-    { "arg" = "mode", "default" = "development" },
-    ]
-    cmd = "echo Building {{ project }} in {{ mode }} mode"
+# Task with optional arguments (default values)
+[tasks.build]
+args = [
+{ "arg" = "project", "default" = "my-app" },
+{ "arg" = "mode", "default" = "development" },
+]
+cmd = "echo Building {{ project }} in {{ mode }} mode"
 
-    # Task with mixed required and optional arguments
-    [tasks.deploy]
-    args = ["service", { "arg" = "environment", "default" = "staging" }]
-    cmd = "echo Deploying {{ service }} to {{ environment }}"
+# Task with mixed required and optional arguments
+[tasks.deploy]
+args = ["service", { "arg" = "environment", "default" = "staging" }]
+cmd = "echo Deploying {{ service }} to {{ environment }}"
 
-    ```
+```
 
 Run tasks:
 
-    ```bash
-    pixi run clean
-    pixi run test
-    pixi run greet --name Bob
-    pixi run build --project my-app --mode production
-    pixi run deploy --service my-service --environment production
-    ```
+```bash
+pixi run clean
+pixi run test
+pixi run greet --name Bob
+pixi run build --project my-app --mode production
+pixi run deploy --service my-service --environment production
+```
 
 ### 7. Platform-Specific Dependencies
 
 These dependencies will only be installed on the specified platform. This is useful for packages that are platform-specific, like compilers or system libraries.
 
-    ```toml
-    # Different dependencies per platform
-    [dependencies]
-    python = "3.11.*"
+```toml
+# Different dependencies per platform
+[dependencies]
+python = "3.11.*"
 
-    [target.linux-64.dependencies]
-    # Linux-specific packages
-    gcc = "*"
+[target.linux-64.dependencies]
+# Linux-specific packages
+gcc = "*"
 
-    [target.win-64.dependencies] 
-    # Windows-specific packages
-    vs2019_win-64 = "*"
+[target.win-64.dependencies] 
+# Windows-specific packages
+vs2019_win-64 = "*"
 
-    [target.osx-arm64.dependencies]
-    # macOS ARM-specific packages
-    ```
+[target.osx-arm64.dependencies]
+# macOS ARM-specific packages
+```
 
 ### 8. Global Tool Installation
 
 Pixi can also install global tools (like conda's base environment):
 
-    ```bash
-    # Install global tools
-    pixi global install ripgrep bat fd-find
-    pixi global install jupyter --expose jupyter --expose ipython
+```bash
+# Install global tools
+pixi global install ripgrep bat fd-find
+pixi global install jupyter --expose jupyter --expose ipython
 
-    # List installed global tools
-    pixi global list
-    ```
+# List installed global tools
+pixi global list
+```
 
 ## Practical Exercises
 
