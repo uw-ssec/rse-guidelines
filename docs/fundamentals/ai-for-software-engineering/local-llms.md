@@ -70,12 +70,11 @@ Local Language Models (LLMs) let you run AI on your own computer without sending
 
     ![Continue running on local llama mode](../../assets/images/Continue%20Local%20LLM.png)
 
-**Troubleshooting tips**  
-
-- If the `ollama pull` command fails, check your internet connection.  
-- If `ollama run` says “port already in use,” restart your computer.  
-- If VS Code doesn’t connect, make sure Ollama is running in the background. 
-- Larger Models can consume significant memory and run drastically slower. Gauge the right model based on you computer specifications.
+!!! info "Troubleshooting Tips"
+    - If the `ollama pull` command fails, check your internet connection.  
+    - If `ollama run` says “port already in use,” restart your computer.  
+    - If VS Code doesn’t connect, make sure Ollama is running in the background. 
+    - Larger Models can consume significant memory and run drastically slower. Gauge the right model based on you computer specifications.
 
 ---
 

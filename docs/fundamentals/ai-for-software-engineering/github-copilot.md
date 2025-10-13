@@ -57,12 +57,11 @@ Sometimes Copilot can feel “too noisy” with automatic completions. You can c
 
 ---
 
-**Troubleshooting tips**  
-
-   - If you don’t see `settings.json`: make sure you opened “Preferences: Open User Settings (JSON)” and not the regular Settings UI.  
-   - If Copilot suggestions never appear, check:  
-   - Your GitHub account has Copilot access (visit [https://github.com/features/copilot](https://github.com/features/copilot)).  
-   - The file type you’re editing is supported (e.g., `.py`, `.js`, `.ts`, `.java`).  
+!!! info "Troubleshooting tips"
+    - If you don’t see `settings.json`: make sure you opened **Preferences: Open User Settings (JSON)** and not the regular Settings UI.  
+    - If Copilot suggestions never appear, check:  
+      - Your GitHub account has Copilot access (visit [https://github.com/features/copilot](https://github.com/features/copilot)).  
+      - The file type you’re editing is supported (e.g., `.py`, `.js`, `.ts`, `.java`).  
 
 ---
 
@@ -99,9 +98,9 @@ Copilot isn’t only inline—it also has a **Chat view** (usually on the right 
 ### Features
 - **Adding context**: Select a piece of code, right-click, and choose *Ask Copilot*. It will pull that code into the chat.  
 - **Switching models**: Some subscriptions allow choosing different models (e.g., GPT-4 vs GPT-3.5). You can select this in the chat panel dropdown.  
-- **Ask vs Edit**:  
-  - **Ask mode** → Copilot gives you advice or explains code.  
-  - **Edit mode** → Copilot proposes changes that you can apply directly to your file.  
+- **Ask vs Edit modes**:  
+      - **Ask mode** → Copilot gives you advice or explains code.  
+      - **Edit mode** → Copilot proposes changes that you can apply directly to your file.  
 
 ### Agent Mode
 - A newer feature that allows Copilot to act as an “agent” that can carry out multi-step tasks (like running tests, refactoring multiple files).  

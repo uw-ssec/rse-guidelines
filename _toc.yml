@@ -17,6 +17,7 @@ parts:
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
     - file: fundamentals/AI-for-Software-Engineering/index
+    - title: AI for Software Engineering
       sections:
         - file: fundamentals/AI-for-Software-Engineering/github-copilot
         - file: fundamentals/AI-for-Software-Engineering/working-with-chatgpt
