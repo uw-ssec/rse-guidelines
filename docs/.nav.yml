@@ -1,6 +1,12 @@
 nav:
   - Overview:
-    - Welcome to UW SSEC RSE Guidelines: index.md
-  - Fundamentals: fundamentals
+    - "Welcome to UW SSEC RSE Guidelines": index.md
+  - Fundamentals:
+    - fundamentals/git-github.md
+    - fundamentals/conventional-commits.md
+    - fundamentals/test-debug.md
+    - fundamentals/share-deploy.md
+    - fundamentals/computing-development-environments/
+    - "AI for Software Engineering": fundamentals/ai-for-software-engineering/
   - Advanced Fundamentals: advanced
   - App Development: app-development
