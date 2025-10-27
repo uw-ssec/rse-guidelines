@@ -16,6 +16,11 @@ parts:
         - file: fundamentals/computing-development-environments/docker
         - file: fundamentals/computing-development-environments/pixi
         - file: fundamentals/computing-development-environments/notebooks-interactive-environments
+    - file: fundamentals/AI-for-Software-Engineering/index
+      sections:
+        - file: fundamentals/AI-for-Software-Engineering/github-copilot
+        - file: fundamentals/AI-for-Software-Engineering/working-with-chatgpt
+        - file: fundamentals/AI-for-Software-Engineering/local-llms
   - caption: Advanced Fundamentals
     chapters:
     - file: advanced/profiling
