@@ -20,7 +20,7 @@ GitHub Copilot is an AI-powered coding assistant that works inside editors like 
 3. **Sign in with GitHub**  
       - After installation, a pop-up will ask you to sign in.  
       - Click the sign-in button → a browser window will open → log in with your GitHub account.  
-      - Free if you’re a student or part of GitHub’s verified programs; otherwise, you may need a subscription.  
+      - Free if you’re a student or part of [GitHub’s verified programs](https://github.com/education); otherwise, you may need a subscription.  
    
       ![GitHub login popup in VS Code](../../assets/images/login%20to%20GH%20from%20VS%20code.png)
 
