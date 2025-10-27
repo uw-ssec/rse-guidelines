@@ -26,7 +26,6 @@ Local Language Models (LLMs) let you run AI on your own computer without sending
     - Go to [https://ollama.com](https://ollama.com).  
     - Download and install for your OS.  
 
-
 2. **Download a model**  
     - Open Terminal (Mac/Linux) or PowerShell (Windows).  
     - Run:  
@@ -46,15 +45,13 @@ Local Language Models (LLMs) let you run AI on your own computer without sending
 
       ![Screenshot of a conversation with llama3 in terminal](../../assets/images/Locall%20LLM%20terminal.png)
 
-
 4. **Connect to VS Code**  
 
     - Install the **Continue** extension (by continue.dev) in VS Code.  
-    - On the activity panel (left sidebar) open the continue extension
-    - On the top right of the chat window, click on the gear icon
-    - Click on "Agents" in the side-bar.
-    - Click on the gear icon next to "Local Agent", this will open a `config.yaml` file. Fill it like this:
-
+    - On the activity panel (left sidebar) open the continue extension.  
+    - On the top right of the chat window, click on the gear icon.  
+    - Click on "Agents" in the sidebar.  
+    - Click on the gear icon next to "Local Agent" to open a `config.yaml` file. Fill it like this:
 
       ```yaml
       name: Local Agent
@@ -66,15 +63,15 @@ Local Language Models (LLMs) let you run AI on your own computer without sending
           model: llama3:latest
       ```
 
-    - This tells continue to use the local llama model running on your machine
+    - This tells Continue to use the local Llama model running on your machine.
 
     ![Continue running on local llama mode](../../assets/images/Continue%20Local%20LLM.png)
 
 !!! info "Troubleshooting Tips"
     - If the `ollama pull` command fails, check your internet connection.  
     - If `ollama run` says “port already in use,” restart your computer.  
-    - If VS Code doesn’t connect, make sure Ollama is running in the background. 
-    - Larger Models can consume significant memory and run drastically slower. Gauge the right model based on you computer specifications.
+    - If VS Code doesn’t connect, make sure Ollama is running in the background.  
+    - Larger models can consume significant memory and run drastically slower. Gauge the right model based on your computer specifications.
 
 ---
 
@@ -92,3 +89,20 @@ Local Language Models (LLMs) let you run AI on your own computer without sending
 - VS Code integrations may be less polished compared to cloud tools.  
 
 ---
+
+## 📚 Additional Resources
+
+- **Ollama Documentation**  
+  [https://github.com/ollama/ollama](https://github.com/ollama/ollama)
+
+- **LM Studio**  
+  [https://lmstudio.ai](https://lmstudio.ai)
+
+- **Continue.dev**  
+  [https://continue.dev](https://continue.dev)
+
+- **Open WebUI** – web interface for local models  
+  [https://github.com/open-webui/open-webui](https://github.com/open-webui/open-webui)
+
+- **Hugging Face Models Hub** – explore and download open LLMs  
+  [https://huggingface.co/models](https://huggingface.co/models)

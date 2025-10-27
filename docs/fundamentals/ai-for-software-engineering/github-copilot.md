@@ -65,7 +65,7 @@ Sometimes Copilot can feel “too noisy” with automatic completions. You can c
 
 ---
 
-## Custom Instructions for Co-pilot
+## Custom Instructions for Copilot
 
 Projects can guide Copilot by adding a special file:
 
@@ -133,3 +133,23 @@ Copilot is powerful, but it has **serious pitfalls** you must stay alert to:
 Think of Copilot as a **junior developer**: fast and helpful, but needing supervision.  
 
 ---
+
+## 📚 Additional Resources
+
+- **Official GitHub Copilot Documentation**  
+  [https://docs.github.com/copilot](https://docs.github.com/copilot) – Full feature overview, setup steps, troubleshooting, and pricing details.  
+
+- **GitHub Copilot in VS Code**  
+  [https://code.visualstudio.com/docs/copilot/overview](https://code.visualstudio.com/docs/copilot/overview) – Microsoft’s official guide on using Copilot in VS Code, including chat, inline suggestions, and settings.  
+
+- **GitHub Copilot for Students and Teachers**  
+  [https://education.github.com/benefits](https://education.github.com/benefits) – Learn how verified students and educators can use Copilot for free.  
+
+- **GitHub Copilot Chat Documentation**  
+  [https://docs.github.com/en/copilot/how-tos/chat-with-copilot](https://docs.github.com/en/copilot/how-tos/chat-with-copilot) – Details about using Copilot Chat, prompts, and agent features.  
+
+- **GitHub Copilot Labs (Experimental)**  
+  [https://githubnext.com/projects/copilot-labs/](https://githubnext.com/projects/copilot-labs/) – Experimental features like code explanations, translations, and refactoring.  
+
+- **Responsible AI & Security Guidance**  
+  [https://docs.github.com/en/copilot/responsible-use](https://docs.github.com/en/copilot/responsible-use) – Best practices for secure and ethical Copilot usage.

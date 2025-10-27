@@ -59,4 +59,18 @@ Draft a one-page design doc for <feature>. Include context, goals, trade-offs, a
 - **Compliance-heavy environments**: Code provenance must be clear.
 - **Opaque suggestions**: If you cannot reason about the output, avoid adopting it.
 
+---
 
+## 📚 Additional Resources
+
+- **OpenAI ChatGPT Help Center**  
+  [https://help.openai.com/en/articles/6825453-chatgpt-release-notes](https://help.openai.com/en/articles/6825453-chatgpt-release-notes)
+
+- **Prompt Engineering Guide (OpenAI)**  
+  [https://platform.openai.com/docs/guides/prompt-engineering](https://platform.openai.com/docs/guides/prompt-engineering)
+
+- **Awesome ChatGPT Prompts (GitHub)**  
+  [https://github.com/f/awesome-chatgpt-prompts](https://github.com/f/awesome-chatgpt-prompts)
+
+- **Responsible Use of AI**  
+  [https://openai.com/safety](https://openai.com/safety)
