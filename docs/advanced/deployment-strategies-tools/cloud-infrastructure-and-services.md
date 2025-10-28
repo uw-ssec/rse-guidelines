@@ -6,18 +6,18 @@
   <img src="../../../assets/images/cloud1.jpg" alt="Cloud Infrastructure" width="700">
 </div>
 
-**Cloud computing** is no longer just a tech buzzword — it’s how the world runs everything from streaming movies to storing research data to building powerful applications. At its heart, cloud infrastructure means using shared, internet-based systems instead of owning bulky physical servers. Whether you're hosting a website, training a machine learning model, or analyzing gigabytes of data, the cloud lets you do it all — faster, cheaper, and from anywhere.
+**Cloud computing** is no longer just a tech buzzword. It’s how the world runs everything from streaming movies to storing research data to building powerful applications. At its heart, cloud infrastructure means using shared, internet-based systems instead of owning bulky physical servers. Whether you're hosting a website, training a machine learning model, or analyzing gigabytes of data, the cloud lets you do it all - faster, cheaper, and from anywhere.
 
-In this section, we’ll break down what cloud infrastructure really means — from virtual machines and scalable storage to flexible networks and pay-as-you-go pricing. You’ll learn how different cloud services work together, how to get started without getting overwhelmed, and why the cloud is changing the way people build, collaborate, and solve real-world problems.
+In this section, we’ll break down what cloud infrastructure really means - from virtual machines and scalable storage to flexible networks and pay-as-you-go pricing. You’ll learn how different cloud services work together, how to get started without getting overwhelmed, and why the cloud is changing the way people build, collaborate, and solve real-world problems.
 
-Whether you're new to the cloud or just looking for a clearer understanding, this is your introduction to the world of cloud infrastructure and services — explained simply, with real-world context and a few “aha!” moments along the way.
+Whether you're new to the cloud or just looking for a clearer understanding, this is your introduction to the world of cloud infrastructure and services explained simply, with real-world context and a few “aha!” moments along the way.
 
 <br>
 <br>
 
 # Understanding Cloud Service Models
 
-Not all cloud services are the same — they’re designed to support different levels of technical control, convenience, and use cases.  
+Not all cloud services are the same. They’re designed to support different levels of technical control, convenience, and use cases.  
 To make this easier to understand, imagine cloud computing as a **layered cake**: each layer gives you a different experience, from doing everything yourself to just using something that’s already built.
 
 There are three main models of cloud computing, and each one serves a different purpose:  
@@ -33,13 +33,13 @@ There are three main models of cloud computing, and each one serves a different 
 ### Infrastructure as a Service (IaaS)
 
 This is the most “do-it-yourself” layer of the cloud.  
-When you use IaaS, you’re basically **renting raw computing power** — like virtual servers, storage, and networking. But it’s up to you to decide what goes on them. Think of it as getting a blank computer — you have to install the OS, configure it, manage updates, and secure it yourself.
+When you use IaaS, you’re basically **renting raw computing power** like virtual servers, storage, and networking. But it’s up to you to decide what goes on them. Think of it as getting a blank computer - you have to install the OS, configure it, manage updates, and secure it yourself.
 
 **Why use it?**  
-IaaS is ideal when you need full control — maybe you’re running high-performance computing, training a deep learning model on GPUs, or building a system that needs a custom stack from the ground up.
+IaaS is ideal when you need full control, maybe you’re running high-performance computing, training a deep learning model on GPUs, or building a system that needs a custom stack from the ground up.
 
 **What’s an example?**  
-Let’s say you’re a researcher running large-scale genomics analysis. You can launch an AWS EC2 instance, configure it with exactly the tools and packages you need, and run your experiments at scale — all without owning a single physical server.
+Let’s say you’re a researcher running large-scale genomics analysis. You can launch an AWS EC2 instance, configure it with exactly the tools and packages you need, and run your experiments at scale - all without owning a single physical server.
 
 ---
 
@@ -54,20 +54,20 @@ This makes PaaS a great choice when you want to launch a service quickly, withou
 If you're building a web app, API, or data dashboard and don’t want to manage the backend infrastructure, PaaS is your friend. It lets you be productive without being bogged down in technical overhead.
 
 **What’s an example?**  
-Imagine you’ve built a collaborative data visualization dashboard. Using something like Azure App Service, you can deploy it with a few clicks — and Azure handles the scaling, patching, and monitoring behind the scenes.
+Imagine you’ve built a collaborative data visualization dashboard. Using something like Azure App Service, you can deploy it with a few clicks, and Azure handles the scaling, patching, and monitoring behind the scenes.
 
 ---
 
 ### Software as a Service (SaaS)
 
-SaaS is the topmost layer — the “just use it” model.  
+SaaS is the topmost layer - the “just use it” model.  
 Here, everything is managed for you. You don’t install software, manage infrastructure, or even think about updates. You just log in and use the tool directly from your browser.
 
 **Why use it?**  
-It’s the simplest and most accessible model — perfect for everyday work like writing documents, tracking issues, or collaborating with others.
+It’s the simplest and most accessible model, perfect for everyday work like writing documents, tracking issues, or collaborating with others.
 
 **What’s an example?**  
-Using Overleaf to co-write a scientific paper with collaborators from different universities. You don’t have to install LaTeX, manage any servers, or even think about version control — it’s all handled for you.
+Using Overleaf to co-write a scientific paper with collaborators from different universities. You don’t have to install LaTeX, manage any servers, or even think about version control - it’s all handled for you.
 
 ---
 
@@ -75,16 +75,16 @@ Using Overleaf to co-write a scientific paper with collaborators from different 
 
 Each cloud service model gives you a different balance of control vs. convenience:
 
-- **IaaS** gives you the most control — and the most responsibility.
-- **PaaS** simplifies deployment — without giving up all customization.
-- **SaaS** offers instant access to tools — with zero infrastructure worries.
+- **IaaS** gives you the most control and the most responsibility.
+- **PaaS** simplifies deployment without giving up all customization.
+- **SaaS** offers instant access to tools with zero infrastructure worries.
 
 The key is to choose the model that best fits your needs.  
 Want full control for a custom research environment? Go with IaaS.  
 Need to launch a data portal fast? PaaS.  
 Just want to write and collaborate easily? SaaS has your back.
 
-Cloud computing is flexible — and that’s what makes it powerful.
+Cloud computing is flexible and that’s what makes it powerful.
 
 
 <br>
@@ -92,7 +92,7 @@ Cloud computing is flexible — and that’s what makes it powerful.
 
 # Core Building Blocks of Cloud Infrastructure
 
-While service models such as IaaS, PaaS, and SaaS provide different degrees of abstraction and management, the **underlying primitives of cloud infrastructure remain constant across providers**. These primitives—compute, storage, networking, and identity management—function as the *core substrate* of cloud-based systems. Much like modular “Lego bricks,” these elements can be recombined to support workloads ranging from high-throughput scientific computing to globally distributed web services.
+While service models such as IaaS, PaaS, and SaaS provide different degrees of abstraction and management, the **underlying primitives of cloud infrastructure remain constant across providers**. These primitives compute, storage, networking, and identity management function as the *core substrate* of cloud-based systems. Much like modular “Lego bricks,” these elements can be recombined to support workloads ranging from high-throughput scientific computing to globally distributed web services.
 
 Understanding how these components interact is essential for designing **secure, performant, and cost-efficient architectures** at scale. This section unpacks each building block in detail, showing how it underpins real-world systems and how advanced users can leverage it to meet specific research or enterprise needs.
 
@@ -107,7 +107,7 @@ Cloud users typically distinguish between three paradigms:
 
 - **Virtual Machines (VMs):** These provide full-stack control, from the operating system upward. They are ideal for bespoke software stacks, performance tuning, and GPU-accelerated workloads such as deep neural network training, bioinformatics pipelines, or climate simulation modeling.
 
-- **Container Orchestration Platforms (e.g., Kubernetes):** Containers encapsulate applications and their dependencies, enabling reproducibility and portability. Kubernetes orchestrates these containers across clusters, automating scaling, fault tolerance, and rolling updates—essential for microservices or reproducible computational experiments.
+- **Container Orchestration Platforms (e.g., Kubernetes):** Containers encapsulate applications and their dependencies, enabling reproducibility and portability. Kubernetes orchestrates these containers across clusters, automating scaling, fault tolerance, and rolling updates, essential for microservices or reproducible computational experiments.
 
 - **Serverless Compute Functions:** In this model, execution is event-driven. Code runs only in response to triggers, and billing occurs per execution rather than per server-hour. This paradigm is increasingly used for lightweight data processing, stream analytics, or integrating multiple services without persistent infrastructure.
 
@@ -120,7 +120,7 @@ A research group training transformer models for protein folding might launch a 
 
 Storage in the cloud is not monolithic but stratified into distinct paradigms optimized for cost, performance, and access patterns:
 
-- **Object Storage (e.g., AWS S3, GCP Cloud Storage):** Ideal for unstructured or semi-structured data—images, logs, scientific datasets—object stores scale virtually without limit and provide high durability guarantees. They are frequently used to host petabyte-scale open datasets or to support big-data analytics pipelines.
+- **Object Storage (e.g., AWS S3, GCP Cloud Storage):** Ideal for unstructured or semi-structured data-images, logs, scientific datasets-object stores scale virtually without limit and provide high durability guarantees. They are frequently used to host petabyte-scale open datasets or to support big-data analytics pipelines.
 
 - **Block Storage (e.g., AWS EBS):** Exposed as virtual disks, block storage underlies VMs and databases requiring low-latency, transactional access. It is typically paired with compute instances.
 
@@ -143,7 +143,7 @@ Typical elements include:
 - **Private Endpoints:** Mechanisms for keeping sensitive data flows off the public internet, essential for compliance with privacy regulations (HIPAA, GDPR).
 
 *Best Practice:*  
-Advanced workloads—such as handling personally identifiable information (PII) or proprietary algorithms—should run within private subnets, behind strict firewall rules and monitored ingress/egress points.
+Advanced workloads such as handling personally identifiable information (PII) or proprietary algorithms should run within private subnets, behind strict firewall rules and monitored ingress/egress points.
 
 ---
 
@@ -176,7 +176,7 @@ By mastering these foundational components, advanced users can design systems th
 
 # Major Cloud Providers & Best Practices in Cloud Computing
 
-While there are **many cloud providers**, we would introduce you to **three major cloud providers**—Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) dominate due to their:
+While there are **many cloud providers**, we would introduce you to **three major cloud providers**-Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) dominate due to their:
 
 - **Global reach** with hundreds of data centers and availability zones.
 - **Breadth of services**: each offers 200+ tools spanning compute, storage, AI/ML, databases, analytics, and more.
@@ -210,7 +210,7 @@ Launched in 2006, AWS is the world’s largest and most mature public cloud plat
 
 - **Service Breadth & Depth:** Beyond core offerings like EC2 (virtual machines) and S3 (object storage), AWS also supports advanced use cases with services such as Amazon Braket (quantum computing), AWS Snowball (edge data transfer), and SageMaker (ML model training and deployment).
 - **Global Footprint:** AWS leads with the highest number of regions and availability zones, offering lower-latency options and data sovereignty compliance for global organizations.
-- **Ecosystem Maturity:** AWS has the richest ecosystem of partners, SDKs, developer tools, enterprise support tiers, and integrations—crucial for long-term scalability and operational stability.
+- **Ecosystem Maturity:** AWS has the richest ecosystem of partners, SDKs, developer tools, enterprise support tiers, and integrations-crucial for long-term scalability and operational stability.
 
 **Example:**  
 During the COVID-19 crisis, biotech company Moderna utilized AWS for running high-throughput simulations of mRNA sequences. The company built scalable high-performance computing (HPC) clusters on AWS to accelerate vaccine research timelines from months to weeks.
@@ -253,9 +253,9 @@ GCP, built on the same infrastructure that powers Google Search, Gmail, and YouT
 
 **Key Technical Strengths:**
 
-- **Big Data & Analytics Stack:** GCP’s BigQuery is a serverless data warehouse capable of handling petabyte-scale queries with high concurrency. Coupled with Dataflow (Apache Beam-based stream and batch processing) and Dataproc (managed Spark/Hadoop), it enables real-time data processing pipelines.
+- **Big Data & Analytics Stack:** GCP’s BigQuery is a serverless data warehouse capable of handling petabyte-scale queries with high concurrency. Coupled with Dataflow (Apache Beam based stream and batch processing) and Dataproc (managed Spark/Hadoop), it enables real-time data processing pipelines.
 - **AI/ML First-Class Support:** With native TensorFlow integration, TPUs (custom AI accelerators), AutoML, and the Vertex AI platform, GCP supports the entire ML lifecycle from model prototyping to production deployment.
-- **Sustainability Leadership:** Google was the first major cloud provider to match 100% of its electricity usage with renewable energy. It aims for 24/7 carbon-free cloud operations by 2030—an important factor for sustainability-conscious organizations.
+- **Sustainability Leadership:** Google was the first major cloud provider to match 100% of its electricity usage with renewable energy. It aims for 24/7 carbon-free cloud operations by 2030, an important factor for sustainability conscious organizations.
 
 **Example:**  
 Spotify migrated much of its backend infrastructure to GCP, leveraging BigQuery for data warehousing and Dataflow for real-time ETL pipelines. This architecture supports its recommendation engine, delivering personalized content to hundreds of millions of users.
@@ -266,13 +266,13 @@ Spotify migrated much of its backend infrastructure to GCP, leveraging BigQuery 
 
 # Best Practices for Using the Cloud Effectively
 
-Cloud platforms like AWS, Azure, and GCP offer immense power — but if not used carefully, they can lead to high costs, security risks, or messy infrastructure. Here are four practical strategies every student, developer, or researcher should follow to build smarter and safer cloud systems.
+Cloud platforms like AWS, Azure, and GCP offer immense power, but if not used carefully, they can lead to high costs, security risks, or messy infrastructure. Here are four practical strategies every student, developer, or researcher should follow to build smarter and safer cloud systems.
 
 
 ## 1. Monitor and Optimize Costs
 
 **Why it matters:**  
-Cloud billing is usage-based — you pay for what you use. That’s great for scalability, but if you're not careful, costs can spiral quickly due to idle resources or poor planning.
+Cloud billing is usage-based, you pay for what you use. That’s great for scalability, but if you're not careful, costs can spiral quickly due to idle resources or poor planning.
 
 **What to do:**
 
@@ -287,11 +287,11 @@ A university lab reduced costs by 60% by automatically turning off compute-heavy
 ## 2. Secure Access and Permissions
 
 **Why it matters:**  
-Even if your cloud provider secures the physical infrastructure, you’re responsible for securing your data and settings — especially access controls.
+Even if your cloud provider secures the physical infrastructure, you’re responsible for securing your data and settings, especially access controls.
 
 **What to do:**
 
-- Follow the **Principle of Least Privilege**: only give users the exact permissions they need — no more.
+- Follow the **Principle of Least Privilege**: only give users the exact permissions they need no more.
 - **Enable Multi-Factor Authentication (MFA)** on all admin and billing accounts.
 - **Clean up old access roles and API keys** regularly using audit tools (e.g., **AWS IAM Access Analyzer**, **Azure AD**, **GCP IAM Recommender**).
 
@@ -302,7 +302,7 @@ In 2021, health data was leaked due to an AWS S3 bucket with overly open permiss
 ## 3. Use Infrastructure as Code (IaC)
 
 **Why it matters:**  
-Clicking through cloud dashboards works once or twice — but it’s slow, error-prone, and not reproducible. With IaC, you write your infrastructure setup as code (just like software), so anyone can deploy it the same way, anytime.
+Clicking through cloud dashboards works once or twice, but it’s slow, error-prone, and not reproducible. With IaC, you write your infrastructure setup as code (just like software), so anyone can deploy it the same way, anytime.
 
 **What to do:**
 
@@ -311,7 +311,7 @@ Clicking through cloud dashboards works once or twice — but it’s slow, error
 - Use **reusable modules or templates** to keep your deployments consistent across teams and projects.
 
 **Analogy:**  
-IaC is like writing a cooking recipe — once it’s written, anyone can follow it to get the same result, again and again.
+IaC is like writing a cooking recipe. Once it’s written, anyone can follow it to get the same result, again and again.
 
 
 ## 4. Plan for Hybrid and Multi-Cloud Use
@@ -323,7 +323,7 @@ Many real-world systems mix cloud and on-premise servers (hybrid) or use more th
 
 - Use **Docker and Kubernetes** to make apps portable across platforms.
 - Explore tools like **Azure Arc**, **AWS Outposts**, or **Google Anthos** for unified control over hybrid systems.
-- Design your system so it's not locked into one cloud provider — avoid proprietary services unless necessary.
+- Design your system so it's not locked into one cloud provider; avoid proprietary services unless necessary.
 
 **Example:**  
 A bank keeps its customer data on-prem for compliance but runs its mobile apps on Azure. It uses Kubernetes to keep things consistent across both.
@@ -337,7 +337,7 @@ Cloud platforms offer flexibility, but smart usage is key. Follow these four pil
 3. **Use code to manage infrastructure**  
 4. **Design systems to work across environments**
 
-By applying these practices early, you’ll avoid unnecessary expenses, security risks, and messy setups — and be better prepared to build cloud-native systems that scale.
+By applying these practices early, you’ll avoid unnecessary expenses, security risks, and messy setups and be better prepared to build cloud-native systems that scale.
 
 <br>
 <br>
