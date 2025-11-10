@@ -26,6 +26,14 @@ authors:
   - family-names: "Nag"
     given-names: "Ayush"
     orcid: "https://orcid.org/0009-0008-1790-597X"
+  - family-names: "Beck"
+    given-names: "David"
+    affiliation: "University of Washington Scientific Software Engineering Center"
+    orcid: "https://orcid.org/0000-0002-5371-7035"
+  - family-names: "Mandava"
+    given-names: "Vani"
+    affiliation: "University of Washington Scientific Software Engineering Center"
+    orcid: "https://orcid.org/0000-0003-3592-9453"
 abstract: "A comprehensive collection of Research Software Engineering (RSE) best practices and guidelines developed by the University of Washington Scientific Software Engineering Center (SSEC). This resource provides tutorials and guides covering fundamentals such as version control, testing, deployment, computing environments, and AI tools for software engineering, as well as advanced topics including profiling, containerization, orchestration, and cloud infrastructure. These guidelines are designed to help researchers and software engineers adopt industry best practices and deliver high-quality, reproducible, and maintainable scientific software."
 keywords:
   - research software engineering
