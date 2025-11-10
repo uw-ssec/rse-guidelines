@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use these guidelines in your work, please cite them using the following metadata."
 title: "Research Software Engineering Guidelines"
-version: 0.1.0
+version: 2025.11.10
 date-released: 2025-11-10
 authors:
   - family-names: "Setiawan"

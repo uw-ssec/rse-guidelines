@@ -1,5 +1,7 @@
 # rse-guidelines
 
+[![DOI](https://zenodo.org/badge/678898974.svg)](https://zenodo.org/badge/latestdoi/678898974)
+
 Research Software Engineering Guidelines Documents
 
 ## Overview
