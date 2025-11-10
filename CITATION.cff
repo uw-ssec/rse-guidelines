@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use these guidelines in your work, please cite them using the following metadata."
+title: "Research Software Engineering Guidelines"
+version: 0.1.0
+date-released: 2025-11-10
+authors:
+  - family-names: "Setiawan"
+    given-names: "Don"
+    affiliation: "University of Washington Scientific Software Engineering Center"
+    orcid: "https://orcid.org/0000-0002-1624-2667"
+  - family-names: "Burggraf"
+    given-names: "Niki"
+    affiliation: "University of Washington Scientific Software Engineering Center"
+    orcid: "https://orcid.org/0009-0000-4572-5898"
+  - family-names: "Huang"
+    given-names: "Ying-Hsiang"
+    orcid: "https://orcid.org/0009-0007-4570-7738"
+  - family-names: "Core"
+    given-names: "Cordero"
+    affiliation: "University of Washington Scientific Software Engineering Center"
+    orcid: "https://orcid.org/0000-0002-3531-3221"
+  - family-names: "Garcia Jurado Suarez"
+    given-names: "Carlos"
+  - family-names: "Rajpura"
+    given-names: "Vraj"
+  - family-names: "Nag"
+    given-names: "Ayush"
+    orcid: "https://orcid.org/0009-0008-1790-597X"
+abstract: "A comprehensive collection of Research Software Engineering (RSE) best practices and guidelines developed by the University of Washington Scientific Software Engineering Center (SSEC). This resource provides tutorials and guides covering fundamentals such as version control, testing, deployment, computing environments, and AI tools for software engineering, as well as advanced topics including profiling, containerization, orchestration, and cloud infrastructure. These guidelines are designed to help researchers and software engineers adopt industry best practices and deliver high-quality, reproducible, and maintainable scientific software."
+keywords:
+  - research software engineering
+  - software development
+  - best practices
+  - scientific computing
+  - version control
+  - testing
+  - deployment
+  - containerization
+  - cloud computing
+  - AI tools
+license: BSD-3-Clause
+repository-code: "https://github.com/uw-ssec/rse-guidelines"
+url: "https://rse-guidelines.readthedocs.io/"
