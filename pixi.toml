@@ -6,11 +6,33 @@ description = "RSE Guidelines by UW SSEC"
 platforms = ["osx-arm64", "linux-64", "win-64"]
 version = "2025.11.10"
 
+[activation.env]
+RELEASE_VERSION = "v$PIXI_PROJECT_VERSION"
+GITHUB_REPOSITORY = "uw-ssec/rse-guidelines"
+
 [tasks]
 start = "mkdocs serve"
 
 [tasks.rtd-publish]
 cmd = "python -m mkdocs build --clean --site-dir $READTHEDOCS_OUTPUT/html --config-file mkdocs.yml"
+
+[tasks.set-default-repo]
+cmd = ["gh", "repo", "set-default", "$GITHUB_REPOSITORY"]
+description = "Set the default repository for GitHub CLI commands"
+
+[tasks.release]
+depends-on = ["set-default-repo"]
+description = "Create GitHub release with data.zip asset"
+cmd = [
+    "gh",
+    "release",
+    "create",
+    "$RELEASE_VERSION",
+    "--title",
+    "$RELEASE_VERSION",
+    "-F",
+    "RELEASE.md",
+]
 
 [dependencies]
 python = "3.11.*"
@@ -18,6 +40,7 @@ mkdocs-material = ">=9.6.16, <10"
 mkdocs-jupyter = ">=0.25.1, <1"
 mkdocs-llmstxt = ">=0.2.0, <1"
 mike = ">=2.1.3, <3"
+gh = ">=2.76.1,<3"
 
 [environments]
 
