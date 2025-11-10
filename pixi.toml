@@ -4,7 +4,7 @@ channels = ["conda-forge"]
 name = "rse-guidelines"
 description = "RSE Guidelines by UW SSEC"
 platforms = ["osx-arm64", "linux-64", "win-64"]
-version = "0.1.0"
+version = "2025.11.10"
 
 [tasks]
 start = "mkdocs serve"
