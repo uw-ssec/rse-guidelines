@@ -53,11 +53,11 @@ spec:
 
 Services provide a stable endpoint to access a group of Pods. They enable network access to a set of Pods and provide load balancing across them.
 
-**Service Types:**
-- **ClusterIP**: Exposes the service on an internal IP within the cluster (default)
-- **NodePort**: Exposes the service on each Node's IP at a static port
-- **LoadBalancer**: Exposes the service externally using a cloud provider's load balancer
-- **ExternalName**: Maps the service to a DNS name
+**Service Types:**  
+- **ClusterIP**: Exposes the service on an internal IP within the cluster (default)  
+- **NodePort**: Exposes the service on each Node's IP at a static port  
+- **LoadBalancer**: Exposes the service externally using a cloud provider's load balancer  
+- **ExternalName**: Maps the service to a DNS name  
 
 ```yaml
 apiVersion: v1
@@ -93,7 +93,7 @@ metadata:
   name: app-secrets
 type: Opaque
 data:
-  password: cGFzc3dvcmQxMjM=  # base64 encoded
+  password: cGFzc3dvcmQxMjM=
 ```
 
 ### Namespaces
@@ -139,7 +139,7 @@ Helm is the package manager for Kubernetes, often described as the "apt/yum/home
 
 ### Basic Helm Chart Structure
 
-```
+```text
 my-app/
 ├── Chart.yaml
 ├── values.yaml
@@ -196,7 +196,7 @@ resources:
 ```
 
 ### Template Example (templates/deployment.yaml)
-
+{% raw %}
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -225,6 +225,7 @@ spec:
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
 ```
+{% endraw %}
 
 ### Common Helm Commands
 
