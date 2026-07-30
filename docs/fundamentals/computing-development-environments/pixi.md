@@ -177,7 +177,11 @@ my-analysis/
 └── pixi.toml
 ```
 
-Two new things appeared: `pixi.lock` and `.pixi/`. Their sizes on disk tell you most of what you need to know about what each one is for:
+Two new things appeared: `pixi.lock` and `.pixi/`. Count the lines in each — the gap between them tells you most of what you need to know about what each one is for:
+
+```bash
+wc -l pixi.toml pixi.lock
+```
 
 ```text
       12 pixi.toml
@@ -341,7 +345,7 @@ Task   Description
 quick  Fast sanity check
 ```
 
-## Why this matters
+### Why this matters
 
 Tasks ship *with* the project, inside `pixi.toml`, not in your shell history or a README someone forgot to update. The next person who clones `my-analysis` doesn't read documentation to learn how to reproduce your result — they run `pixi run analyze`. They never dig through your terminal scrollback, and they never have to reverse-engineer a Makefile to figure out what `make` actually does here.
 
@@ -370,7 +374,7 @@ Add a task called `clean` that deletes `pi-estimate.png`, then chain it so that
 You've been told `pixi.lock` is "the exact solution." Look at one entry from it and see what that actually means. Find the `numpy` package pixi resolved for this project:
 
 ```bash
-grep -A 8 "numpy-2.5.1-py314hb79c6fa_0.conda$" pixi.lock
+grep -A 6 '^- conda: .*numpy-2.5.1' pixi.lock
 ```
 
 ```yaml
@@ -391,7 +395,7 @@ Every field is more specific than what `pixi.toml` asked for:
 - `sha256` and `md5` are content hashes of the download itself. They let pixi (or anyone) verify that the bytes it just fetched are the bytes that were solved, not a package that was quietly rebuilt or repackaged under the same name and version.
 - `depends` is that package's own dependency list, exactly as conda-forge published it for this build — not something pixi invented. It's how the solver knew this build of numpy needed this Python ABI and this `liblapack` range in the first place.
 
-This block repeats — once per package, once per platform in `platforms` — for every one of the three packages you added. That's the whole file: `pixi.toml` holds three version ranges you wrote by hand, about a dozen lines. `pixi.lock` holds the solved answer for all of them, sha256 and all: 1,184 lines.
+This block repeats once per package, once per platform in `platforms` — but not just for the three packages you named. `depends:` is recursive: numpy pulls in `python`, `libcxx`, `liblapack`, and each of those pulls in its own dependencies in turn, all the way down. `pixi.lock` records that whole transitive closure, not only the packages `pixi.toml` mentions by name — 89 conda package entries for this project, each with its own block like the one above. That's the gap between the two files: `pixi.toml` holds three version ranges you wrote by hand, about a dozen lines. `pixi.lock` holds the solved answer for the entire closure, sha256 and all: 1,184 lines.
 
 ### Proof: `.pixi/` is disposable
 
@@ -515,7 +519,7 @@ same name, and confirm the default environment still cannot see it.
 
 ## conda and PyPI in one project
 
-Not everything you want lives on conda-forge. Pixi can pull from PyPI in the same project, using the same lock file, without reaching for `pip install` on the side. Add `humanize` — a small package for formatting numbers and dates that has no conda-forge build — with `--pypi`:
+Not everything you want lives on conda-forge. Pixi can pull from PyPI in the same project, using the same lock file, without reaching for `pip install` on the side. To see how that mechanism works, add `humanize` — a small package for formatting numbers and dates — with `--pypi`:
 
 ```bash
 pixi add --pypi humanize
@@ -551,11 +555,49 @@ pixi run python -c "import humanize; print(humanize.__version__)"
 - Reach for `--pypi` when a package is not on conda-forge at all.
 - Both kinds land in the same `pixi.lock`. One file still pins the entire environment.
 
-`humanize` earns its place in this example because it genuinely has no conda-forge build — there's no other way to get it into the project. numpy, matplotlib, and anything like them belong in `[dependencies]`, not behind `--pypi`: split a compiled, interdependent stack like that across two separate solvers and you lose the one thing a single conda solve buys you — a solver that reasons about binary compatibility across the *whole* environment at once. Reach for `--pypi` only after checking conda-forge and coming up empty.
+Before reaching for `--pypi`, check conda-forge first — don't assume a package is missing just because you haven't seen it there. `pixi search` answers that directly:
+
+```bash
+pixi search humanize
+```
+
+```text
+Using channels: conda-forge
+humanize-4.16.0-pyhd8ed1ab_0
+----------------------------
+
+Name                humanize
+Version             4.16.0
+Build               pyhd8ed1ab_0
+Size                71.17 KiB
+```
+
+`humanize` is, in fact, on conda-forge — the `--pypi` example earlier in this section demonstrates the mechanics of adding a PyPI dependency, not a package with nowhere else to come from. For a package genuinely absent from conda-forge, `pixi search` says so plainly instead of silently returning nothing:
+
+```bash
+pixi search '*cowsay*'
+```
+
+```text
+Using channels: conda-forge
+Error:   × No packages found matching '*cowsay*'
+  help: Try glob patterns like 'python*' or '*numpy*'
+```
+
+Search with a glob (`*name*`), not the exact PyPI name: conda-forge sometimes normalises names, so a PyPI `some-package` can turn up on conda-forge as `some_package`. Search for the exact PyPI spelling and you can get a false negative — miss a package that's really there and reach for `--pypi` when you didn't need to. numpy, matplotlib, and anything like them belong in `[dependencies]`, not behind `--pypi`: split a compiled, interdependent stack like that across two separate solvers and you lose the one thing a single conda solve buys you — a solver that reasons about binary compatibility across the *whole* environment at once. Reach for `--pypi` only after checking conda-forge and coming up empty.
 
 ### Packages from other channels
 
-`conda-forge` isn't the only channel, and it isn't always where a package lives. `bioconda`, for example, hosts a large share of the bioinformatics tooling that research-computing users reach for — tools like `fastqc` that conda-forge doesn't carry. Add the channel to the workspace first:
+`conda-forge` isn't the only channel, and it isn't always where a package lives. `bioconda`, for example, hosts a large share of the bioinformatics tooling that research-computing users reach for — tools like `fastqc` that conda-forge doesn't carry.
+
+A Monte Carlo estimate of pi has no reason to depend on a bioinformatics tool, so this is a detour from `my-analysis`. Set up a separate scratch project just to see how channels work, the same way the migration section later on this page uses its own throwaway project rather than folding into the running example:
+
+```bash
+pixi init scratch-bio
+cd scratch-bio
+```
+
+Add the channel to the workspace first:
 
 ```bash
 pixi workspace channel add bioconda
@@ -589,6 +631,8 @@ fastqc = { version = ">=0.12.1,<0.13", channel = "bioconda" }
 
 Notice what landed in the manifest: not a bare version string like the other entries in `[dependencies]`, but a table with a `channel` key. `channel::package` at the command line isn't just a lookup hint — pixi records the channel choice in `pixi.toml`, so a collaborator reading the manifest (or the solver resolving it later) knows `fastqc` comes from `bioconda` specifically, not wherever else it happens to be found.
 
+`scratch-bio` was only for this detour. The rest of the page returns to `my-analysis`, which never gained a `bioconda` channel or a `fastqc` dependency — `cd` back into it before continuing.
+
 ## Inspecting your environment
 
 At this point `my-analysis` has grown past what fits in your head: two environments, three conda dependencies, a PyPI dependency, three tasks. The next time something looks wrong — a version you didn't expect, a package you can't find — you need a fast answer to "what did pixi actually install, and why is that package here?" Four commands answer that.
@@ -597,6 +641,15 @@ At this point `my-analysis` has grown past what fits in your head: two environme
 
 ```bash
 pixi list
+```
+
+```text
+Installed for: osx-arm64
+Name                       Version      Build                      Size  Kind   Source
+_openmp_mutex              4.5          7_kmp_llvm             8.13 KiB  conda  https://conda.anaconda.org/conda-forge
+brotli                     1.2.0        h7d5ae5b_1            19.76 KiB  conda  https://conda.anaconda.org/conda-forge
+bzip2                      1.0.8        hd037594_9           121.91 KiB  conda  https://conda.anaconda.org/conda-forge
+ca-certificates            2026.7.22    hbd8a1cb_0           128.69 KiB  conda  https://conda.anaconda.org/conda-forge
 ```
 
 Add `-e` to ask about a named environment instead of the default one:
@@ -743,7 +796,7 @@ If your old project instead tracked dependencies in a `requirements.txt`, don't 
 pixi add --pypi $(tr '\n' ' ' < requirements.txt)
 ```
 
-That resolves every package in one solve, the same way `pixi add python numpy matplotlib` did earlier on this page.
+That resolves every package in one solve, the same way `pixi add python numpy matplotlib` did earlier on this page. It only works cleanly on a plain list of package names, though — a `requirements.txt` with comment lines (`# ...`) or `-r other-requirements.txt` includes will get passed straight through to `pixi add --pypi` as if they were package names and fail. Clean those out, or generate the argument list some other way, before batching a file that has them.
 
 ## Cheat sheet
 
@@ -766,7 +819,7 @@ Every command below appeared earlier on this page. Use this table to jump straig
 
 | Conda/Mamba | Pixi |
 | --- | --- |
-| `conda create -n myenv python=3.11` | `pixi init myproject` then `pixi add python=3.11` |
+| `conda create -n myenv python=3.11` | `pixi init myproject` then `pixi add python` |
 | `conda activate myenv` | `pixi shell` |
 | `conda install numpy` | `pixi add numpy` |
 | `conda run -n myenv python script.py` | `pixi run python script.py` |
@@ -777,7 +830,7 @@ Every command below appeared earlier on this page. Use this table to jump straig
 This page covers what you need for a single project with one or two environments. Pixi has more to offer once that stops being enough:
 
 - [`pyproject.toml` integration](https://pixi.sh/latest/python/pyproject_toml/) for package maintainers who want pixi to manage a Python package's build and publish workflow instead of keeping a separate `pixi.toml`.
-- [Multi-platform locking](https://pixi.sh/latest/workspace/multi_platform/) with `pixi workspace platform add`, so `pixi.lock` covers machines beyond the one you ran `pixi init` on.
+- [Multi-platform locking](https://pixi.sh/latest/workspace/multi_platform_configuration/) with `pixi workspace platform add`, so `pixi.lock` covers machines beyond the one you ran `pixi init` on.
 - [CI with `setup-pixi`](https://github.com/prefix-dev/setup-pixi) and `locked: true`, so a pipeline fails loudly instead of silently re-solving against a channel that has moved on since you last committed.
 - [Multiple environments in depth](https://pixi.sh/latest/workspace/multi_environment/), including solve groups, which go beyond the single `dev` example on this page.
 
