@@ -512,3 +512,79 @@ same name, and confirm the default environment still cannot see it.
     pixi run -e repl ipython --version
     pixi run ipython --version   # command not found
     ```
+
+## conda and PyPI in one project
+
+Not everything you want lives on conda-forge. Pixi can pull from PyPI in the same project, using the same lock file, without reaching for `pip install` on the side. Add `humanize` — a small package for formatting numbers and dates that has no conda-forge build — with `--pypi`:
+
+```bash
+pixi add --pypi humanize
+```
+
+```text
+✔ Added humanize >=4.16.0, <5
+Added these as pypi-dependencies.
+```
+
+That second line matters: `pixi add python numpy matplotlib` all went into `[dependencies]`, but this one went somewhere new.
+
+```toml title="pixi.toml"
+[pypi-dependencies]
+humanize = ">=4.16.0, <5"
+```
+
+It behaves like any other dependency once it's there:
+
+```bash
+pixi run python -c "import humanize; print(humanize.__version__)"
+```
+
+```text
+4.16.0
+```
+
+### conda-forge first
+
+`--pypi` is easy to reach for out of habit, but it isn't the default choice — `[dependencies]` is. The rule:
+
+- Prefer conda-forge (`[dependencies]`) for compiled and scientific-stack packages — numpy, matplotlib, scipy, anything with C or Fortran underneath. One solver then reasons about binary compatibility across the whole environment, which is what prevents ABI mismatches.
+- Reach for `--pypi` when a package is not on conda-forge at all.
+- Both kinds land in the same `pixi.lock`. One file still pins the entire environment.
+
+`humanize` earns its place in this example because it genuinely has no conda-forge build — there's no other way to get it into the project. numpy, matplotlib, and anything like them belong in `[dependencies]`, not behind `--pypi`: split a compiled, interdependent stack like that across two separate solvers and you lose the one thing a single conda solve buys you — a solver that reasons about binary compatibility across the *whole* environment at once. Reach for `--pypi` only after checking conda-forge and coming up empty.
+
+### Packages from other channels
+
+`conda-forge` isn't the only channel, and it isn't always where a package lives. `bioconda`, for example, hosts a large share of the bioinformatics tooling that research-computing users reach for — tools like `fastqc` that conda-forge doesn't carry. Add the channel to the workspace first:
+
+```bash
+pixi workspace channel add bioconda
+```
+
+```text
+✔ Added bioconda (https://conda.anaconda.org/bioconda/)
+```
+
+```toml title="pixi.toml"
+[workspace]
+channels = ["conda-forge", "bioconda"]
+```
+
+`channels` under `[workspace]` is an ordered list, and pixi searches it in order. Adding `bioconda` here makes every package on it available to the whole workspace, not just to whatever you add next.
+
+Most of the time you don't need to say which channel a package comes from — pixi searches the whole list and picks it up. To pin one package to a specific channel regardless of ordering, use `channel::package`:
+
+```bash
+pixi add bioconda::fastqc
+```
+
+```text
+✔ Added bioconda::fastqc
+```
+
+```toml title="pixi.toml"
+[dependencies]
+fastqc = { version = ">=0.12.1,<0.13", channel = "bioconda" }
+```
+
+Notice what landed in the manifest: not a bare version string like the other entries in `[dependencies]`, but a table with a `channel` key. `channel::package` at the command line isn't just a lookup hint — pixi records the channel choice in `pixi.toml`, so a collaborator reading the manifest (or the solver resolving it later) knows `fastqc` comes from `bioconda` specifically, not wherever else it happens to be found.
