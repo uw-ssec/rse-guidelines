@@ -374,7 +374,7 @@ Add a task called `clean` that deletes `pi-estimate.png`, then chain it so that
 You've been told `pixi.lock` is "the exact solution." Look at one entry from it and see what that actually means. Find the `numpy` package pixi resolved for this project:
 
 ```bash
-grep -A 6 '^- conda: .*numpy-2.5.1' pixi.lock
+grep -A 8 '^- conda: .*numpy-2.5.1' pixi.lock
 ```
 
 ```yaml
@@ -395,7 +395,7 @@ Every field is more specific than what `pixi.toml` asked for:
 - `sha256` and `md5` are content hashes of the download itself. They let pixi (or anyone) verify that the bytes it just fetched are the bytes that were solved, not a package that was quietly rebuilt or repackaged under the same name and version.
 - `depends` is that package's own dependency list, exactly as conda-forge published it for this build — not something pixi invented. It's how the solver knew this build of numpy needed this Python ABI and this `liblapack` range in the first place.
 
-This block repeats once per package, once per platform in `platforms` — but not just for the three packages you named. `depends:` is recursive: numpy pulls in `python`, `libcxx`, `liblapack`, and each of those pulls in its own dependencies in turn, all the way down. `pixi.lock` records that whole transitive closure, not only the packages `pixi.toml` mentions by name — 89 conda package entries for this project, each with its own block like the one above. That's the gap between the two files: `pixi.toml` holds three version ranges you wrote by hand, about a dozen lines. `pixi.lock` holds the solved answer for the entire closure, sha256 and all: 1,184 lines.
+This block repeats once per package, once per platform in `platforms` — but not just for the three packages you named. `depends:` is recursive: numpy pulls in `python`, `libcxx`, `liblapack`, and each of those pulls in its own dependencies in turn, all the way down. `pixi.lock` records that whole transitive closure, not only the packages `pixi.toml` mentions by name — 81 conda package entries for this project, each with its own block like the one above. That's the gap between the two files: `pixi.toml` holds three version ranges you wrote by hand, about a dozen lines. `pixi.lock` holds the solved answer for the entire closure, sha256 and all: 1,184 lines.
 
 ### Proof: `.pixi/` is disposable
 
@@ -555,21 +555,17 @@ pixi run python -c "import humanize; print(humanize.__version__)"
 - Reach for `--pypi` when a package is not on conda-forge at all.
 - Both kinds land in the same `pixi.lock`. One file still pins the entire environment.
 
-Before reaching for `--pypi`, check conda-forge first — don't assume a package is missing just because you haven't seen it there. `pixi search` answers that directly:
+Before reaching for `--pypi`, check conda-forge first — don't assume a package is missing just because you haven't seen it there. Search with a glob (`*name*`), not the exact package name: conda-forge sometimes normalises names, so a PyPI `some-package` can turn up on conda-forge as `some_package`, and an exact-name search can miss it. `pixi search` answers that directly:
 
 ```bash
-pixi search humanize
+pixi search '*humanize*'
 ```
 
 ```text
 Using channels: conda-forge
-humanize-4.16.0-pyhd8ed1ab_0
-----------------------------
-
-Name                humanize
-Version             4.16.0
-Build               pyhd8ed1ab_0
-Size                71.17 KiB
+humanize (60 versions)
+  4.16.0 pyhd8ed1ab_0 [noarch] conda-forge
+  4.15.0 pyhd8ed1ab_0 [noarch] conda-forge
 ```
 
 `humanize` is, in fact, on conda-forge — the `--pypi` example earlier in this section demonstrates the mechanics of adding a PyPI dependency, not a package with nowhere else to come from. For a package genuinely absent from conda-forge, `pixi search` says so plainly instead of silently returning nothing:
@@ -584,7 +580,7 @@ Error:   × No packages found matching '*cowsay*'
   help: Try glob patterns like 'python*' or '*numpy*'
 ```
 
-Search with a glob (`*name*`), not the exact PyPI name: conda-forge sometimes normalises names, so a PyPI `some-package` can turn up on conda-forge as `some_package`. Search for the exact PyPI spelling and you can get a false negative — miss a package that's really there and reach for `--pypi` when you didn't need to. numpy, matplotlib, and anything like them belong in `[dependencies]`, not behind `--pypi`: split a compiled, interdependent stack like that across two separate solvers and you lose the one thing a single conda solve buys you — a solver that reasons about binary compatibility across the *whole* environment at once. Reach for `--pypi` only after checking conda-forge and coming up empty.
+numpy, matplotlib, and anything like them belong in `[dependencies]`, not behind `--pypi`: split a compiled, interdependent stack like that across two separate solvers and you lose the one thing a single conda solve buys you — a solver that reasons about binary compatibility across the *whole* environment at once. Reach for `--pypi` only after checking conda-forge and coming up empty.
 
 ### Packages from other channels
 
@@ -648,6 +644,7 @@ Installed for: osx-arm64
 Name                       Version      Build                      Size  Kind   Source
 _openmp_mutex              4.5          7_kmp_llvm             8.13 KiB  conda  https://conda.anaconda.org/conda-forge
 brotli                     1.2.0        h7d5ae5b_1            19.76 KiB  conda  https://conda.anaconda.org/conda-forge
+brotli-bin                 1.2.0        hc919400_1            18.19 KiB  conda  https://conda.anaconda.org/conda-forge
 bzip2                      1.0.8        hd037594_9           121.91 KiB  conda  https://conda.anaconda.org/conda-forge
 ca-certificates            2026.7.22    hbd8a1cb_0           128.69 KiB  conda  https://conda.anaconda.org/conda-forge
 ```
