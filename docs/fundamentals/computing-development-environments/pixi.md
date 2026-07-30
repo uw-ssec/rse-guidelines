@@ -82,7 +82,7 @@ On Windows you can download the [installer](https://github.com/prefix-dev/pixi/r
 powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
 ```
 
-For other installation methods go the the [pixi installation docs](https://pixi.sh/latest/installation/).
+For other installation methods go to the [pixi installation docs](https://pixi.sh/latest/installation/).
 
 ### Verification
 
