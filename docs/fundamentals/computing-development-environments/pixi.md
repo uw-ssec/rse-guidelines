@@ -191,3 +191,176 @@ Two new things appeared: `pixi.lock` and `.pixi/`. Their sizes on disk tell you 
 - **`.pixi/` is the environment directory: a disposable build product.** It's the actual environment — interpreter and packages unpacked on disk — built from `pixi.lock`. It's gitignored, and pixi can rebuild it from the lock file at any time.
 
 Commit `pixi.toml` and `pixi.lock`. Never commit `.pixi/`.
+
+## Running code
+
+There's no environment to activate. Run a single command inside the project's environment with `pixi run`:
+
+```bash
+pixi run python -V
+pixi run python -c "import numpy; print(numpy.__version__)"
+```
+
+Each invocation resolves the environment, runs the one command you gave it, and exits — nothing lingers in your shell. `pixi run` works from anywhere in the project tree, not just the directory holding `pixi.toml`, so you don't need to `cd` to the project root first.
+
+For a longer interactive session, drop into a shell with the environment already set up instead:
+
+```bash
+pixi shell
+```
+
+```bash
+exit
+```
+
+`exit` (or `Ctrl-D`) leaves the shell and returns you to whatever environment, or lack of one, you had before. Either way — `pixi run` for one-off commands, `pixi shell` for a session — there's no global environment to remember to deactivate afterward.
+
+## The running example
+
+The rest of this page uses a small script, `analysis.py`, that you should save into `my-analysis/`. It's a seeded Monte Carlo estimate of pi: everyone who runs it with the default sample count gets the exact same numbers, so the output below is not "an example" — it's what you'll actually see.
+
+```python title="analysis.py"
+"""Seeded Monte Carlo estimate of pi."""
+
+import argparse
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--samples", type=int, default=100_000)
+args = parser.parse_args()
+
+rng = np.random.default_rng(42)
+xy = rng.random((args.samples, 2))
+inside = (xy**2).sum(axis=1) <= 1.0
+running = 4 * np.cumsum(inside) / np.arange(1, args.samples + 1)
+estimate = running[-1]
+
+print(f"samples : {args.samples:,}")
+print(f"estimate: {estimate:.6f}")
+print(f"error   : {abs(estimate - np.pi):.6f} ({abs(estimate - np.pi) / np.pi:.4%})")
+
+plt.figure(figsize=(8, 4))
+plt.plot(running, lw=0.8)
+plt.axhline(np.pi, color="crimson", ls="--", label="pi")
+plt.xlabel("samples")
+plt.ylabel("estimate")
+plt.legend()
+plt.savefig("pi-estimate.png", dpi=120, bbox_inches="tight")
+print("wrote   : pi-estimate.png")
+```
+
+Run it the same way you ran `python -V` above:
+
+```bash
+pixi run python analysis.py
+```
+
+```text
+samples : 100,000
+estimate: 3.150080
+error   : 0.008487 (0.2702%)
+wrote   : pi-estimate.png
+```
+
+## Tasks
+
+Typing `pixi run python analysis.py` every time gets old, and it doesn't capture the `--samples` flag you might want for a quick check. Pixi tasks turn a command into a name, stored in the manifest, that anyone with the project can run.
+
+Add three of them:
+
+```bash
+pixi task add analyze "python analysis.py"
+pixi task add quick "python analysis.py --samples 2000" --description "Fast sanity check"
+pixi task add full "python analysis.py" --depends-on quick
+```
+
+Each call rewrites the manifest's `[tasks]` table:
+
+```toml title="pixi.toml"
+[tasks]
+analyze = "python analysis.py"
+quick = { cmd = "python analysis.py --samples 2000", description = "Fast sanity check" }
+full = { cmd = "python analysis.py", depends-on = ["quick"] }
+```
+
+Look at what happened to `quick` and `full`: pixi promoted them from a plain string to an inline table the moment they needed to carry something beyond the bare command — a `description`, a `depends-on`. `analyze` stays a one-line string because a command is all it is.
+
+`full` depends on `quick`, so running it runs the chain:
+
+```bash
+pixi run full
+```
+
+```text
+✨ Pixi task (quick): python analysis.py --samples 2000: (Fast sanity check)
+samples : 2,000
+estimate: 3.138000
+error   : 0.003593 (0.1144%)
+wrote   : pi-estimate.png
+
+✨ Pixi task (full): python analysis.py
+samples : 100,000
+estimate: 3.150080
+error   : 0.008487 (0.2702%)
+wrote   : pi-estimate.png
+```
+
+`quick` runs first, in full, then `full` itself runs. Chain as many tasks together as the workflow needs; pixi runs each dependency once, in order, before the task you asked for.
+
+### Listing tasks
+
+Run `pixi run` with no task name, and pixi lists what's available:
+
+```bash
+pixi run
+```
+
+```text
+Available tasks:
+	analyze
+	full
+	quick
+```
+
+Names only — no descriptions. For those, ask `pixi task list` instead:
+
+```bash
+pixi task list
+```
+
+```text
+Tasks that can run on this machine:
+-----------------------------------
+analyze (by design), full (by design), quick (by design)
+Task   Description
+quick  Fast sanity check
+```
+
+## Why this matters
+
+Tasks ship *with* the project, inside `pixi.toml`, not in your shell history or a README someone forgot to update. The next person who clones `my-analysis` doesn't read documentation to learn how to reproduce your result — they run `pixi run analyze`. They never dig through your terminal scrollback, and they never have to reverse-engineer a Makefile to figure out what `make` actually does here.
+
+!!! example "A real one: this site"
+
+    The guidelines site you are reading is itself a pixi workspace. Its
+    `pixi.toml` defines `start` for local preview, `rtd-publish` for the
+    Read the Docs build, and a `release` task that uses `depends-on` to run
+    `set-default-repo` first. Every page here was built by `pixi run`.
+
+### Your turn
+
+Add a task called `clean` that deletes `pi-estimate.png`, then chain it so that
+`analyze` always starts from a clean slate.
+
+??? success "Solution"
+
+    ```bash
+    pixi task add clean "rm -f pi-estimate.png"
+    pixi task add fresh "python analysis.py" --depends-on clean
+    pixi run fresh
+    ```
