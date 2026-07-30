@@ -817,7 +817,7 @@ A UW SSEC advanced pixi guide covering these topics in depth is planned but not 
     both:
 
     ```toml
-    # Task with required arguments
+    # Task with a required argument
     [tasks.greet]
     args = ["name"]
     cmd = "echo Hello, {{ name }}!"
@@ -828,7 +828,7 @@ A UW SSEC advanced pixi guide covering these topics in depth is planned but not 
     { "arg" = "project", "default" = "my-app" },
     { "arg" = "mode", "default" = "development" },
     ]
-    cmd = "echo Building {{ project }} in {{ mode }} mode"
+    cmd = "echo 'Building {{ project }} in {{ mode }} mode'"
 
     # Task with mixed required and optional arguments
     [tasks.deploy]
@@ -836,13 +836,27 @@ A UW SSEC advanced pixi guide covering these topics in depth is planned but not 
     cmd = "echo Deploying {{ service }} to {{ environment }}"
     ```
 
-    Run them by passing the arguments as flags:
+    The `build` command's echoed string is quoted. Without the quotes, pixi's
+    task shell treats the bare word `in` as a reserved word and refuses to
+    parse the command — a small trap worth knowing about if you write a task
+    command that happens to contain `in` unquoted.
+
+    Arguments are positional, not flags — pass values in the order they're
+    declared:
 
     ```bash
-    pixi run greet --name Bob
-    pixi run build --project my-app --mode production
-    pixi run deploy --service my-service --environment production
+    pixi run greet Bob
+    pixi run build
+    pixi run build my-app production
+    pixi run deploy api
+    pixi run deploy api production
     ```
+
+    Because arguments are positional, there's no way to skip ahead to a later
+    one: to override `mode` (the second argument to `build`) you must also
+    supply `project` (the first), even if you just want the default. That's
+    why `pixi run build my-app production` passes `my-app` explicitly instead
+    of skipping straight to `production`.
 
     This is beyond fundamentals — the UW SSEC advanced pixi guide will cover it
     in more depth.
