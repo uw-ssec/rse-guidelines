@@ -417,3 +417,98 @@ That's the payoff of the rule from earlier: `.pixi/` is a cache, rebuildable at 
 ### Which file guarantees what
 
 The manifest records what you asked for; the lock file records what you got. A collaborator who clones your project with `pixi.lock` intact gets the exact versions, builds, and hashes you resolved — the same numbers this page has been showing you. A collaborator who has only `pixi.toml` — say, because `pixi.lock` was gitignored by mistake — gets whatever the solver picks today, against whatever conda-forge and PyPI look like today. Those can be different environments even though the manifest never changed.
+
+## Beyond one environment
+
+Your users need `numpy` and `matplotlib` to run the analysis, nothing more. You, working on the project, also want `pytest` for tests, maybe a linter, maybe IPython for exploring interactively. Put all of that in one `[dependencies]` table and everyone who installs the project pulls your entire toolchain along with it — installs get slower, the solve gets harder, and "what does this need to run" gets muddied with "what do I need to work on it."
+
+Conda's usual answer is a second `environment-dev.yml`, maintained by hand alongside the first, and the two drift apart the moment someone forgets to update both. Pixi keeps the answer inside the one manifest and the one lock file: declare **features** — named groups of extra dependencies — then compose them into **environments**.
+
+Add `pytest` as a feature called `dev`, then create an environment that uses it:
+
+```bash
+pixi add --feature dev pytest
+pixi workspace environment add dev --feature dev
+```
+
+The first command's output looks almost like any other `pixi add`, with one difference:
+
+```text
+✔ Added pytest
+Added these only for feature: dev
+```
+
+`pytest` is now in the manifest, but no environment references the `dev` feature yet, so it isn't part of your project's default environment and isn't installed anywhere. A feature that no environment uses is inert, and pixi says so the next time it parses the manifest. That happens on the very next command, `pixi workspace environment add`, before that same command's own fix takes effect:
+
+```text
+ WARN Encountered 1 warning while parsing the manifest:
+  ⚠ The feature 'dev' is defined but not used in any environment. Dependencies
+  │ of unused features are not resolved or checked, and use wildcard (*)
+  │ version specifiers by default, disregarding any set `pinning-strategy`
+    ╭─[pixi.toml:17:10]
+ 16 │
+ 17 │ [feature.dev.dependencies]
+    ·          ───
+ 18 │ pytest = "*"
+    ╰────
+  help: Remove the feature from the manifest or add it to an environment
+
+✔ Added environment dev
+```
+
+(The exact line numbers depend on your manifest.) That ordering — a warning about a problem, immediately followed by the command that fixes it — looks backwards until you remember that pixi re-parses the whole manifest before acting on it. It read the orphaned `dev` feature left over from the previous command, flagged it, and then this command wired that feature into an environment: the very fix the warning asked for. Seeing the warning land between the two commands is what makes the two-step sequence — add to a feature, then attach the feature to an environment — feel purposeful instead of arbitrary.
+
+The manifest now carries both pieces:
+
+```toml title="pixi.toml"
+[feature.dev.dependencies]
+pytest = "*"
+
+[environments]
+dev = ["dev"]
+```
+
+### Crossing the environment boundary
+
+Ask each environment what it can see. Inside `dev`:
+
+```bash
+pixi run -e dev pytest --version
+```
+
+```text
+pytest 9.1.1
+```
+
+Without `-e dev` — the default environment, the one everyone gets:
+
+```bash
+pixi run pytest --version
+```
+
+```text
+pytest: command not found
+
+Available tasks:
+	analyze
+	full
+	quick
+```
+
+That failure is the point, not a bug to work around. The default environment is exactly what a user gets the moment they clone `my-analysis` and run `pixi run analyze`: python, numpy, matplotlib, and nothing you added only for yourself.
+
+`dev = ["dev"]` under `[environments]` is a list of feature names — here, just the one. Yet the `dev` environment has `numpy` and `matplotlib` too, not only `pytest`: every environment implicitly includes the `default` feature — whatever lives in the bare `[dependencies]` table — unless you explicitly opt out with `--no-default-feature`. That's the whole rule. `dev` isn't `pytest` in isolation; it's `default` plus `pytest`.
+
+### Your turn
+
+Create a `repl` feature containing `ipython`, wire it into an environment of the
+same name, and confirm the default environment still cannot see it.
+
+??? success "Solution"
+
+    ```bash
+    pixi add --feature repl ipython
+    pixi workspace environment add repl --feature repl
+    pixi run -e repl ipython --version
+    pixi run ipython --version   # command not found
+    ```
