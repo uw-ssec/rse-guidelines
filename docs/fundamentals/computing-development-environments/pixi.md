@@ -588,3 +588,148 @@ fastqc = { version = ">=0.12.1,<0.13", channel = "bioconda" }
 ```
 
 Notice what landed in the manifest: not a bare version string like the other entries in `[dependencies]`, but a table with a `channel` key. `channel::package` at the command line isn't just a lookup hint — pixi records the channel choice in `pixi.toml`, so a collaborator reading the manifest (or the solver resolving it later) knows `fastqc` comes from `bioconda` specifically, not wherever else it happens to be found.
+
+## Inspecting your environment
+
+At this point `my-analysis` has grown past what fits in your head: two environments, three conda dependencies, a PyPI dependency, three tasks. The next time something looks wrong — a version you didn't expect, a package you can't find — you need a fast answer to "what did pixi actually install, and why is that package here?" Four commands answer that.
+
+`pixi list` shows every package installed in the default environment, one row each, with version, build string, size, and where it came from:
+
+```bash
+pixi list
+```
+
+Add `-e` to ask about a named environment instead of the default one:
+
+```bash
+pixi list -e dev
+```
+
+`pixi list` is flat — it tells you *what* is installed, not *why*. `pixi tree` answers the second question, showing the dependency graph so you can see which of your direct dependencies pulled in a package you never asked for:
+
+```bash
+pixi tree
+```
+
+```text
+Installed for: osx-arm64
+├── humanize 4.16.0
+├── matplotlib 3.11.1
+│   ├── matplotlib-base 3.11.1
+│   │   ├── contourpy 1.3.3
+│   │   │   ├── numpy 2.5.1
+│   │   │   │   ├── python 3.14.6
+```
+
+Read it top to bottom: `numpy` isn't a top-level entry here because nothing above it is looking for it directly — it's pulled in as a dependency of `contourpy`, which is pulled in by `matplotlib-base`, which is pulled in by `matplotlib`, which you did add directly. When a version you didn't pin shows up in `pixi.lock`, `pixi tree` is how you find which of your dependencies is responsible.
+
+Neither command tells you which environments exist or what's in each of them at a glance. `pixi info` does:
+
+```bash
+pixi info
+```
+
+```text
+Environments
+------------
+        Environment: default
+           Features: default
+           Channels: conda-forge
+   Dependency count: 3
+       Dependencies: python, numpy, matplotlib
+  PyPI Dependencies: humanize
+   Target platforms: osx-arm64
+    Prefix location: ~/my-analysis/.pixi/envs/default
+              Tasks: analyze, full, quick
+
+        Environment: dev
+           Features: dev, default
+           Channels: conda-forge
+   Dependency count: 4
+       Dependencies: pytest, python, numpy, matplotlib
+```
+
+This is the summary to reach for first when the question is about environments rather than individual packages: it lists every environment in the workspace, the features each one composes, the dependencies and tasks that come with it, and where its files live on disk — all without picking one environment ahead of time the way `pixi list -e` requires.
+
+## Tools without a project
+
+Not everything you install needs to live inside a project. A linter, a formatter, a CLI utility you use across every repo you touch — none of that belongs in `my-analysis`'s `[dependencies]`, because it isn't part of what `my-analysis` needs to run. It's a tool *you* use, not something the project depends on.
+
+The old habit is to `pip install` a tool like that into whatever environment happens to be active. That's how you end up with "I pip-installed a linter into my analysis environment and broke it" — the tool's own dependencies collide with the project's, and now neither one solves cleanly. `pixi global install` avoids the collision entirely by giving each tool its own isolated environment under `~/.pixi`, completely separate from any project and from every other global tool:
+
+```bash
+pixi global install ruff
+```
+
+```text
+Global environments as specified in '~/.pixi/manifests/pixi-global.toml'
+└── ruff: 0.15.22
+    └─ exposes: ruff
+```
+
+`pixi global list` shows what you have installed globally and which commands each one exposes on your `PATH` — here, the `ruff` environment exposes a single `ruff` command. A tool with several entry points can expose more than one; `--expose` lets you control exactly which binaries from the installed package become available on your `PATH`, and under what name, rather than accepting all of them.
+
+Keep the distinction in mind: `pixi add` changes a project's manifest and lock file, checked into git, reproducible on any machine that clones the project. `pixi global install` changes state on *your* machine, outside any project — nothing about it is recorded in `my-analysis`, and a collaborator cloning your repository gets no trace of it. Reach for it for tools you personally use across projects, not for anything a project needs to run.
+
+## Migrating from conda
+
+If you're starting from an existing conda project rather than from scratch, pixi can read its `environment.yml` and generate a starting manifest instead of you re-declaring every dependency by hand. Given this file:
+
+```yaml title="environment.yml"
+name: old-analysis
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pip
+  - pip:
+      - humanize
+```
+
+Import it into a new pixi project:
+
+```bash
+pixi init --import environment.yml migrated
+```
+
+The generated `pixi.toml`:
+
+```toml title="pixi.toml"
+[workspace]
+channels = ["conda-forge"]
+name = "old-analysis"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.11.*"
+numpy = "*"
+pip = "*"
+
+[pypi-dependencies]
+humanize = "*"
+```
+
+The translation follows a fixed pattern:
+
+| `environment.yml` | pixi manifest |
+| --- | --- |
+| `name:` | `[workspace] name` |
+| `channels:` | `[workspace] channels` |
+| `dependencies:` | `[dependencies]` |
+| `pip:` entries | `[pypi-dependencies]` |
+
+One thing to clean up by hand: the import carried `pip` itself into `[dependencies]`, because it was a literal entry in the source file's `dependencies:` list. Pixi doesn't need `pip` installed to manage `[pypi-dependencies]` — that entry is safe to delete.
+
+The versions in the generated manifest are also worth a second look. `python=3.11` became the range `3.11.*`, which is a reasonable translation. But `numpy` and `humanize`, which had no version pin in `environment.yml`, both became the wildcard `*` — accept whatever the solver finds today, with no lower bound at all. Treat the import as a starting point, not a finished manifest: replace `*` with real ranges for anything that matters, the same way you would for a dependency you added by hand with `pixi add`.
+
+If your old project instead tracked dependencies in a `requirements.txt`, don't import it one line at a time — piping it through `xargs` so that each package gets its own `pixi add --pypi` call runs a full dependency solve per line, which is slow and wasteful for a file with any real number of entries. Batch it into a single call instead:
+
+```bash
+pixi add --pypi $(tr '\n' ' ' < requirements.txt)
+```
+
+That resolves every package in one solve, the same way `pixi add python numpy matplotlib` did earlier on this page.
