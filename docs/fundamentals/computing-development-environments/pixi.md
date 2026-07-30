@@ -662,12 +662,23 @@ pixi global install ruff
 ```
 
 ```text
-Global environments as specified in '~/.pixi/manifests/pixi-global.toml'
-└── ruff: 0.15.22
+└── ruff: 0.16.0 (installed)
     └─ exposes: ruff
 ```
 
-`pixi global list` shows what you have installed globally and which commands each one exposes on your `PATH` — here, the `ruff` environment exposes a single `ruff` command. A tool with several entry points can expose more than one; `--expose` lets you control exactly which binaries from the installed package become available on your `PATH`, and under what name, rather than accepting all of them.
+To see what you have installed globally and which commands each one exposes on your `PATH`, run `pixi global list`:
+
+```bash
+pixi global list
+```
+
+```text
+Global environments as specified in '~/.pixi/manifests/pixi-global.toml'
+└── ruff: 0.16.0
+    └─ exposes: ruff
+```
+
+Here, the `ruff` environment exposes a single `ruff` command. A tool with several entry points can expose more than one; `--expose` lets you control exactly which binaries from the installed package become available on your `PATH`, and under what name, rather than accepting all of them.
 
 Keep the distinction in mind: `pixi add` changes a project's manifest and lock file, checked into git, reproducible on any machine that clones the project. `pixi global install` changes state on *your* machine, outside any project — nothing about it is recorded in `my-analysis`, and a collaborator cloning your repository gets no trace of it. Reach for it for tools you personally use across projects, not for anything a project needs to run.
 
