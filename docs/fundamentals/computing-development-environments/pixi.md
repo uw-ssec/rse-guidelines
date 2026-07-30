@@ -744,3 +744,111 @@ pixi add --pypi $(tr '\n' ' ' < requirements.txt)
 ```
 
 That resolves every package in one solve, the same way `pixi add python numpy matplotlib` did earlier on this page.
+
+## Cheat sheet
+
+### CLI commands and the manifest
+
+Every command below appeared earlier on this page. Use this table to jump straight from a command to the manifest table it writes.
+
+| Command | Writes to `pixi.toml` |
+| --- | --- |
+| `pixi init <name>` | Creates `[workspace]`, `[tasks]`, `[dependencies]` |
+| `pixi add numpy` | `[dependencies] numpy = ">=…"` |
+| `pixi add --pypi humanize` | `[pypi-dependencies] humanize = ">=…"` |
+| `pixi add --feature dev pytest` | `[feature.dev.dependencies] pytest = "*"` |
+| `pixi workspace environment add dev --feature dev` | `[environments] dev = ["dev"]` |
+| `pixi workspace channel add bioconda` | `[workspace] channels` gains `bioconda` |
+| `pixi task add analyze "python analysis.py"` | `[tasks] analyze = "…"` |
+| `pixi task add full "…" --depends-on quick` | `[tasks] full = { cmd = "…", depends-on = ["quick"] }` |
+
+### Coming from conda
+
+| Conda/Mamba | Pixi |
+| --- | --- |
+| `conda create -n myenv python=3.11` | `pixi init myproject` then `pixi add python=3.11` |
+| `conda activate myenv` | `pixi shell` |
+| `conda install numpy` | `pixi add numpy` |
+| `conda run -n myenv python script.py` | `pixi run python script.py` |
+| `conda env export > environment.yaml` | Share `pixi.toml` **and** `pixi.lock` |
+
+## Going further
+
+This page covers what you need for a single project with one or two environments. Pixi has more to offer once that stops being enough:
+
+- [`pyproject.toml` integration](https://pixi.sh/latest/python/pyproject_toml/) for package maintainers who want pixi to manage a Python package's build and publish workflow instead of keeping a separate `pixi.toml`.
+- [Multi-platform locking](https://pixi.sh/latest/workspace/multi_platform/) with `pixi workspace platform add`, so `pixi.lock` covers machines beyond the one you ran `pixi init` on.
+- [CI with `setup-pixi`](https://github.com/prefix-dev/setup-pixi) and `locked: true`, so a pipeline fails loudly instead of silently re-solving against a channel that has moved on since you last committed.
+- [Multiple environments in depth](https://pixi.sh/latest/workspace/multi_environment/), including solve groups, which go beyond the single `dev` example on this page.
+
+A UW SSEC advanced pixi guide covering these topics in depth is planned but not yet available.
+
+## Appendices
+
+??? note "Appendix A · Platform-specific dependencies (beyond fundamentals)"
+
+    Restrict a dependency to a specific platform with a `[target.*.dependencies]`
+    table. Pixi only installs these on the matching platform, which is useful for
+    compilers and other system-level packages that don't apply everywhere:
+
+    ```toml
+    [dependencies]
+    python = "3.11.*"
+
+    [target.linux-64.dependencies]
+    # Linux-specific packages
+    gcc = "*"
+
+    [target.win-64.dependencies]
+    # Windows-specific packages
+    vs2022_win-64 = "*"
+
+    [target.osx-arm64.dependencies]
+    # macOS ARM-specific packages
+    ```
+
+    This is beyond fundamentals — the UW SSEC advanced pixi guide will cover it
+    in more depth.
+
+??? note "Appendix B · Task arguments (beyond fundamentals)"
+
+    Tasks can take arguments instead of hard-coding every value into the
+    command. An argument can be required, optional with a default, or a mix of
+    both:
+
+    ```toml
+    # Task with required arguments
+    [tasks.greet]
+    args = ["name"]
+    cmd = "echo Hello, {{ name }}!"
+
+    # Task with optional arguments (default values)
+    [tasks.build]
+    args = [
+    { "arg" = "project", "default" = "my-app" },
+    { "arg" = "mode", "default" = "development" },
+    ]
+    cmd = "echo Building {{ project }} in {{ mode }} mode"
+
+    # Task with mixed required and optional arguments
+    [tasks.deploy]
+    args = ["service", { "arg" = "environment", "default" = "staging" }]
+    cmd = "echo Deploying {{ service }} to {{ environment }}"
+    ```
+
+    Run them by passing the arguments as flags:
+
+    ```bash
+    pixi run greet --name Bob
+    pixi run build --project my-app --mode production
+    pixi run deploy --service my-service --environment production
+    ```
+
+    This is beyond fundamentals — the UW SSEC advanced pixi guide will cover it
+    in more depth.
+
+## Conclusion
+
+Pixi's core idea is that the project, not a named global environment, is the unit of reproducibility: the manifest and the lock file live with the code, travel with it in git, and rebuild the same environment on any machine. Coming from conda, the adjustment isn't a new set of commands to memorize so much as a shift in what you keep in your head — you stop tracking which environment is active and start trusting that `pixi run` and `pixi shell` always give you the right one.
+
+That shift is what pays off. A collaborator who clones your repository gets your exact environment, not a fresh solve against whatever conda-forge and PyPI look like today, and neither of you has to remember to keep an `environment.yml` in sync with reality by hand.
