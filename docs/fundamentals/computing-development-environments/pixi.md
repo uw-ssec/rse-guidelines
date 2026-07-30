@@ -364,3 +364,56 @@ Add a task called `clean` that deletes `pi-estimate.png`, then chain it so that
     pixi task add fresh "python analysis.py" --depends-on clean
     pixi run fresh
     ```
+
+## The lock file
+
+You've been told `pixi.lock` is "the exact solution." Look at one entry from it and see what that actually means. Find the `numpy` package pixi resolved for this project:
+
+```bash
+grep -A 8 "numpy-2.5.1-py314hb79c6fa_0.conda$" pixi.lock
+```
+
+```yaml
+- conda: https://conda.anaconda.org/conda-forge/osx-arm64/numpy-2.5.1-py314hb79c6fa_0.conda
+  sha256: 3aa853ec05e6fe6b660be354fd05ab2a89b2e6cc6346612a6c75a18f38f62c3d
+  md5: 3587914062d5537dde5fa8c2131cf624
+  depends:
+  - python
+  - __osx >=11.0
+  - libcxx >=19
+  - python_abi 3.14.* *_cp314
+  - liblapack >=3.9.0,<4.0a0
+```
+
+Every field is more specific than what `pixi.toml` asked for:
+
+- The `conda:` line is a full URL — channel, platform, package name, version, *and build string* (`py314hb79c6fa_0`). The build string distinguishes this exact build of numpy 2.5.1 from any other build of the same version compiled against a different Python or a different BLAS.
+- `sha256` and `md5` are content hashes of the download itself. They let pixi (or anyone) verify that the bytes it just fetched are the bytes that were solved, not a package that was quietly rebuilt or repackaged under the same name and version.
+- `depends` is that package's own dependency list, exactly as conda-forge published it for this build — not something pixi invented. It's how the solver knew this build of numpy needed this Python ABI and this `liblapack` range in the first place.
+
+This block repeats — once per package, once per platform in `platforms` — for every one of the three packages you added. That's the whole file: `pixi.toml` holds three version ranges you wrote by hand, about a dozen lines. `pixi.lock` holds the solved answer for all of them, sha256 and all: 1,184 lines. The manifest is what you asked for; the lock is what you got.
+
+### Proof: `.pixi/` is disposable
+
+Earlier, this page called `.pixi/` a disposable build product. Prove it. Delete it and rerun the task that depends on it:
+
+```bash
+rm -rf .pixi
+pixi run analyze
+```
+
+```text
+✨ Pixi task (analyze): python analysis.py
+samples : 100,000
+estimate: 3.150080
+error   : 0.008487 (0.2702%)
+wrote   : pi-estimate.png
+```
+
+No error, no re-solve, no prompt — the same four lines you saw the first time you ran `analyze`. Pixi noticed the environment directory was gone, reinstalled every package straight from `pixi.lock`, and then ran the task, all inside that one `pixi run` call. Nothing about the *content* of the run changed, because nothing about the lock file changed.
+
+That's the payoff of the rule from earlier: `.pixi/` is a cache, rebuildable at any time from `pixi.lock`. `pixi.toml` and `pixi.lock` *are* the project. This is why `.pixi/` is gitignored, and why a dead laptop, a wiped CI runner, or a fresh clone is a non-event — `pixi run` rebuilds the exact same environment from the lock file every time.
+
+### Which file guarantees what
+
+The manifest records what you asked for; the lock file records what you got. A collaborator who clones your project with `pixi.lock` intact gets the exact versions, builds, and hashes you resolved — the same numbers this page has been showing you. A collaborator who has only `pixi.toml` — say, because `pixi.lock` was gitignored by mistake — gets whatever the solver picks today, against whatever conda-forge and PyPI look like today. Those can be different environments even though the manifest never changed.
