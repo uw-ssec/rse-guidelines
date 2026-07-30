@@ -563,10 +563,13 @@ pixi search '*humanize*'
 
 ```text
 Using channels: conda-forge
-humanize (60 versions)
+humanize (N versions)
   4.16.0 pyhd8ed1ab_0 [noarch] conda-forge
   4.15.0 pyhd8ed1ab_0 [noarch] conda-forge
 ```
+
+The version count grows with every release, so yours will differ. What matters is that the package was found at all.
+
 
 `humanize` is, in fact, on conda-forge — the `--pypi` example earlier in this section demonstrates the mechanics of adding a PyPI dependency, not a package with nowhere else to come from. For a package genuinely absent from conda-forge, `pixi search` says so plainly instead of silently returning nothing:
 
