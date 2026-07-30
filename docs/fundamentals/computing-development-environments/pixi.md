@@ -91,3 +91,103 @@ Once you have pixi installed, you can verify by running the command below
 ```bash
 pixi --version
 ```
+
+## Your first project
+
+Create a new project with `pixi init`, then move into it:
+
+```bash
+pixi init my-analysis
+cd my-analysis
+```
+
+pixi creates a small tree:
+
+```text
+my-analysis/
+├── .gitattributes
+├── .gitignore
+└── pixi.toml
+```
+
+`pixi.toml` is the manifest — the file you edit by hand to describe the project. This is exactly what `pixi init` writes into it:
+
+```toml title="pixi.toml"
+[workspace]
+channels = ["conda-forge"]  # (1)!
+name = "my-analysis"  # (2)!
+platforms = ["osx-arm64"]  # (3)!
+version = "0.1.0"  # (4)!
+
+[tasks]
+
+[dependencies]
+```
+
+1. `channels` says where packages come from, in priority order. `conda-forge` is the default.
+2. `name` identifies the project. `pixi init` took it from the argument you gave it.
+3. `platforms` says which platform(s) the lock file must cover. Add more (`linux-64`, `win-64`, `linux-aarch64`, ...) so the project also solves on other machines.
+4. `version` is the project's own version, independent of anything you later publish.
+
+`[tasks]` and `[dependencies]` are generated empty — pixi always writes both tables, ready for you to fill in as you add tasks and packages later in this guide.
+
+`authors` and `description` are optional fields you can add yourself; pixi 0.73.0's `init` does not write them, however you may see them listed in older tutorials.
+
+!!! note "`[workspace]` or `[project]`?"
+
+    Older pixi tutorials show a `[project]` table. It was renamed to
+    `[workspace]`. `[project]` still parses, but pixi 0.73.0 emits a deprecation
+    warning telling you to replace it. Use `[workspace]` in new projects.
+
+### Adding dependencies
+
+A project with no dependencies doesn't do much. Add the three packages this analysis needs:
+
+```bash
+pixi add python numpy matplotlib
+```
+
+```text
+✔ Added python >=3.14.6,<3.15
+✔ Added numpy >=2.5.1,<3
+✔ Added matplotlib >=3.11.1,<4
+```
+
+Notice that `python` went in unpinned — the command was `pixi add python`, not `pixi add python=3.11`. pixi's default pinning strategy already wrote the `>=3.14.6,<3.15` range for you, so you rarely need to pin versions by hand.
+
+`pixi.toml` now has a filled-in `[dependencies]` table:
+
+```toml title="pixi.toml"
+[dependencies]
+python = ">=3.14.6,<3.15"
+numpy = ">=2.5.1,<3"
+matplotlib = ">=3.11.1,<4"
+```
+
+## What just happened
+
+Look at the directory again:
+
+```text
+my-analysis/
+├── .gitattributes
+├── .gitignore
+├── .pixi/
+├── pixi.lock
+└── pixi.toml
+```
+
+Two new things appeared: `pixi.lock` and `.pixi/`. Their sizes on disk tell you most of what you need to know about what each one is for:
+
+```text
+      12 pixi.toml
+    1184 pixi.lock
+```
+
+`pixi.toml` barely grew — it's still three short version ranges. `pixi.lock` is nearly a hundred times larger. That gap is the whole model:
+
+- **`pixi.toml` is the manifest: your intent.** Version ranges, written by you, small and readable, meant to be reviewed in a diff.
+- **`pixi.lock` is the lock file: the exact solution.** Every package, every exact version, build string and hash, resolved for every platform listed in `platforms`. pixi writes and maintains it; you never hand-edit it.
+- **`.pixi/` is the environment directory: a disposable build product.** It's the actual environment — interpreter and packages unpacked on disk — built from `pixi.lock`. It's gitignored, and pixi can rebuild it from the lock file at any time.
+
+Commit `pixi.toml` and `pixi.lock`. Never commit `.pixi/`.
