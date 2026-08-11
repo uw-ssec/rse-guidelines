@@ -1,6 +1,7 @@
 nav:
   - Overview:
     - "Welcome to UW SSEC RSE Guidelines": index.md
+    - "Get Started": overview/get-started.md
   - Fundamentals:
     - fundamentals/git-github.md
     - fundamentals/conventional-commits.md
