@@ -136,7 +136,7 @@ What is a conda package?
 - Cross platform
 - Made from **recipes**
 
-You can search for conda packages at <https://anaconda.org/> or the terminal shown below.
+You can search for conda packages using the terminal (shown below) or at <https://conda-forge.org/packages/>.
 
 ```console
 # Look at the packages you have installed
