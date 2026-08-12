@@ -15,7 +15,7 @@ Pre-requisites:
 ```bash
 git clone https://github.com/uw-ssec/rse-guidelines.git
 cd rse-guidelines/exercises/vscode-debugging
-pixi install          # or: conda env create -f environment.yml
+pixi install
 ```
 
 !!! warning "Open the exercise folder, not the repository root"

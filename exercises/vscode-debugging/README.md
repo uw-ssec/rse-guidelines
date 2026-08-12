@@ -16,16 +16,13 @@ this folder is the workspace root.
 code exercises/vscode-debugging
 ```
 
-Then create the environment with either tool:
+Then create the environment:
 
 ```bash
-# With pixi
 pixi install
-
-# Or with conda
-conda env create -f environment.yml
-conda activate vscode-debugging
 ```
+
+If you do not have Pixi yet, see the [Pixi page](../../docs/fundamentals/computing-development-environments/pixi.md) for installation.
 
 Select the interpreter in VS Code via the Command Palette
 (`Cmd+Shift+P` / `Ctrl+Shift+P`) then **Python: Select Interpreter**. The
