@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 # Claude files
-/.claude/
+.claude/
 
 # Distribution / packaging
 .Python
