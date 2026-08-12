@@ -53,11 +53,12 @@ spec:
 
 Services provide a stable endpoint to access a group of Pods. They enable network access to a set of Pods and provide load balancing across them.
 
-**Service Types:**  
-- **ClusterIP**: Exposes the service on an internal IP within the cluster (default)  
-- **NodePort**: Exposes the service on each Node's IP at a static port  
-- **LoadBalancer**: Exposes the service externally using a cloud provider's load balancer  
-- **ExternalName**: Maps the service to a DNS name  
+**Service Types:**
+
+- **ClusterIP**: Exposes the service on an internal IP within the cluster (default)
+- **NodePort**: Exposes the service on each Node's IP at a static port
+- **LoadBalancer**: Exposes the service externally using a cloud provider's load balancer
+- **ExternalName**: Maps the service to a DNS name
 
 ```yaml
 apiVersion: v1
@@ -96,6 +97,8 @@ data:
   password: cGFzc3dvcmQxMjM=
 ```
 
+Note: Secret `data` values are base64-encoded, not encrypted. For encryption at rest, enable etcd encryption or use an external secrets manager.
+
 ### Namespaces
 
 Namespaces provide a mechanism for isolating groups of resources within a single cluster. They are useful for dividing cluster resources between multiple users or teams.
@@ -106,18 +109,20 @@ Persistent Volumes provide a way to store data that persists beyond the lifecycl
 
 ## Kubernetes Architecture
 
-Kubernetes follows a master-worker architecture:
+Kubernetes follows a control plane / node architecture:
 
 **Control Plane Components:**
+
 - **API Server**: The front-end for the Kubernetes control plane
 - **etcd**: Consistent and highly-available key-value store for all cluster data
 - **Scheduler**: Assigns Pods to Nodes based on resource requirements
 - **Controller Manager**: Runs controller processes to regulate the state of the cluster
 
 **Node Components:**
+
 - **kubelet**: Agent that ensures containers are running in Pods
 - **kube-proxy**: Maintains network rules for Pod communication
-- **Container Runtime**: Software responsible for running containers (e.g., Docker, containerd)
+- **Container Runtime**: Software responsible for running containers (e.g., containerd, CRI-O)
 
 ## Packaging with Helm
 
@@ -128,6 +133,7 @@ Helm is the package manager for Kubernetes, often described as the "apt/yum/home
 ### Key Concepts
 
 **Helm Charts**: A collection of files that describe a related set of Kubernetes resources. A chart contains:
+
 - `Chart.yaml`: Metadata about the chart (name, version, description)
 - `values.yaml`: Default configuration values
 - `templates/`: Directory containing Kubernetes manifest templates
@@ -196,7 +202,6 @@ resources:
 ```
 
 ### Template Example (templates/deployment.yaml)
-{% raw %}
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -225,7 +230,6 @@ spec:
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
 ```
-{% endraw %}
 
 ### Common Helm Commands
 
@@ -277,5 +281,4 @@ helm package <chart-path>
 - [Official Kubernetes Documentation](https://kubernetes.io/docs/)
 - [Kubernetes Concepts](https://kubernetes.io/docs/concepts/)
 - [Helm Documentation](https://helm.sh/docs/)
-- [Kubernetes Patterns Book](https://www.redhat.com/en/resources/kubernetes-patterns-ebook)
 - [CNCF Landscape](https://landscape.cncf.io/)
