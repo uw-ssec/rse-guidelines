@@ -24,10 +24,17 @@ A notebook does not contain a Python installation. It sends code to a **kernel**
 
 That is a name. Nothing in it pins a package version. If a colleague's notebook throws `ModuleNotFoundError` on your machine when it clearly ran on theirs, this is usually why: you have the notebook and not their environment.
 
-So the first thing to get right is the same thing the rest of this chapter is about. Create a project environment with [Pixi](./pixi.md) or [conda/mamba](./conda-mamba.md), install `ipykernel` into it, and launch Jupyter from inside it. To see which kernels Jupyter can actually find:
+So the first thing to get right is the same thing the rest of this chapter is about. Create a project environment with [Pixi](./pixi.md), add `ipykernel` to it, and launch Jupyter from inside it:
 
 ```bash
-jupyter kernelspec list
+pixi add ipykernel jupyterlab
+pixi run jupyter lab
+```
+
+Because the environment lives in the project and is pinned by `pixi.lock`, the notebook and the environment travel together in the same repository. To see which kernels Jupyter can actually find:
+
+```bash
+pixi run jupyter kernelspec list
 ```
 
 ```text
@@ -37,19 +44,36 @@ Available kernels:
 
 Check that path. Pointing at a kernel from a different environment than the one you think you are in is the first thing we check when someone's notebook will not run.
 
-!!! tip "Register a project environment as a named kernel"
+!!! tip "One Jupyter, many projects: `pixi-kernel`"
 
-    If you run one Jupyter installation and want to switch between project
-    environments from the kernel picker, install a named kernel from inside each
-    environment:
+    Launching Jupyter from inside the project is the simplest thing that works,
+    but it means installing JupyterLab into every project.
+    [`pixi-kernel`](https://github.com/renan-r-santos/pixi-kernel) lets you keep
+    one JupyterLab and still get a per-project environment. It registers a
+    "Python (Pixi)" kernel that resolves the `pixi.toml` next to the notebook
+    and starts the kernel inside *that* project's environment, so the kernel
+    cannot drift from the project it belongs to.
+
+    Install it alongside JupyterLab, once:
 
     ```bash
-    python -m ipykernel install --user --name my-project --display-name "My Project"
+    pixi global install jupyterlab --with pixi-kernel
     ```
 
-    Launching Jupyter from within the project environment is simpler where you
-    can do it, because the kernel cannot then drift from the environment that
-    defines it.
+    That exposes `jupyter-lab` on your `PATH`. Then each project needs only
+    `ipykernel`:
+
+    ```bash
+    pixi init my-analysis
+    cd my-analysis
+    pixi add ipykernel
+    ```
+
+    Restart JupyterLab and pick **Python (Pixi)** for notebooks in that
+    directory. It needs JupyterLab 4 and Pixi 0.39 or newer, and it also
+    provides R kernels via `r-irkernel` or `ark`. For a project with several
+    environments, choose the one you want in JupyterLab's property inspector;
+    VS Code only ever uses the `default` environment.
 
 ## Hidden state
 

@@ -16,8 +16,8 @@ If Git itself is new rather than just the collaboration workflow, the Software C
 
 This is the most common problem we see, and it is almost always an environment problem. The Computing development environments chapter covers it:
 
-- [Conda/Mamba](../fundamentals/computing-development-environments/conda-mamba.md) if you already have an `environment.yml` and need to understand what it does and does not guarantee.
-- [Pixi](../fundamentals/computing-development-environments/pixi.md) if you are starting fresh. It writes a lock file by default, which conda makes you opt into.
+- [Pixi](../fundamentals/computing-development-environments/pixi.md) is what we recommend, for new projects and for migrating existing ones. It ties the environment to the project directory and writes a lock file by default, which conda makes you opt into.
+- [Conda/Mamba](../fundamentals/computing-development-environments/conda-mamba.md) if you have inherited an `environment.yml` and need to understand what it does and does not guarantee before moving off it.
 - [Docker](../fundamentals/computing-development-environments/docker.md) when the environment includes system libraries, compilers, or services a language package manager cannot install.
 - [Notebooks and interactive environments](../fundamentals/computing-development-environments/notebooks-interactive-environments.md) if the thing that will not reproduce is a notebook.
 
