@@ -34,7 +34,7 @@ you can use the [conventional-pre-commit](https://github.com/compilerla/conventi
 If you want reminders of these guidelines every time you commit, you set [this git message](../resources/gitmessage) as the default you see when you run `git commit` by running the following commands
 
 ```sh
-curl https://raw.githubusercontent.com/uw-ssec/rse-guidelines/main/resources/gitmessage > ~/.gitmessage
+curl https://raw.githubusercontent.com/uw-ssec/rse-guidelines/refs/heads/main/docs/resources/gitmessage > ~/.gitmessage
 git config --global commit.template ~/.gitmessage
 ```
 
