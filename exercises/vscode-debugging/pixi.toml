@@ -1,0 +1,17 @@
+[workspace]
+channels = ["conda-forge"]
+name = "vscode-debugging"
+platforms = ["osx-arm64", "osx-64", "linux-64", "win-64"]
+version = "0.1.0"
+
+[tasks]
+demo = "python reverse.py"
+test = "pytest tests.py"
+gendate = "python gendate.py"
+deleter = "python deleter.py"
+
+[dependencies]
+python = ">=3.11"
+pytest = ">=8"
+debugpy = ">=1.8"
+ipykernel = ">=6"
