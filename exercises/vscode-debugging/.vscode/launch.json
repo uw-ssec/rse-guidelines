@@ -1,0 +1,55 @@
+{
+    // Debug configurations for the VS Code debugging tutorial.
+    // Docs: https://code.visualstudio.com/docs/python/debugging
+    //
+    // "type": "debugpy" is required by the Python Debugger extension
+    // (ms-python.debugpy). Older tutorials use "type": "python", which is
+    // deprecated and will warn.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // Basic debugging: runs whatever file is in the active editor.
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            // Pre-launch tasks: runs the "delete_today" task from tasks.json
+            // before launching, so gendate.py always starts from a clean slate.
+            "name": "Python: GenDate",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/gendate.py",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "preLaunchTask": "delete_today"
+        },
+        {
+            // Remote debugging: attaches to an already-running process that
+            // called debugpy.listen(5678). Start deleter.py first.
+            "name": "Python: Attach using Port",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "127.0.0.1",
+                "port": 5678
+            },
+            "justMyCode": true
+        },
+        {
+            // Unit testing: debugs pytest itself so breakpoints inside tests
+            // (and inside the code under test) are hit.
+            "name": "PyTest",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "tests.py"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
